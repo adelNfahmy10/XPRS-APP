@@ -1,0 +1,29 @@
+$main-color: #81FB37;
+
+.product-details{
+  h5{
+    font-size: 14px;
+  }
+  span{
+    font-size: 12px;
+    font-weight: 600;
+  }
+}
+.product-image{
+  border: 2px solid $main-color;
+  img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .out-of-stock{
+    position: absolute;
+    background-color: #c6c6c64e;
+    span{
+      background-color: #2222224e;
+      font-size: 10px;
+      padding: 2px 5px;
+    }
+  }
+}
+

@@ -1,0 +1,99 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="text-center me-5">My Cart</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="cart">
+    <ion-list>
+      @for (item of cartProducts(); track $index) {
+        <ion-item-sliding>
+          <ion-item-options side="start">
+            <ion-item-option color="danger" class="text-white">Delete</ion-item-option>
+          </ion-item-options>
+
+          <ion-item>
+            <ion-label>
+              <div class="row g-3 py-2">
+                <div class="col-3">
+                  <div class="product-image position-relative d-flex justify-content-center align-items-center w-100 h-100 rounded">
+                    <img loading="lazy" [src]="item?.product?.picture1 || item?.product?.picture2 || 'assets/icon/xprs_spinner.gif'" [alt]="item?.product?.name">
+                    @if(item?.product?.availability == 'Out Of Stock'){
+                      <div class="out-of-stock position-absolute w-100 h-100 d-flex justify-content-center align-items-center rounded">
+                        <span class="rounded-4">Sold Out</span>
+                      </div>
+                    }
+
+                  </div>
+                </div>
+
+                <div class="col-9">
+                  <div class="product-details d-flex flex-column justify-content-center">
+                    <h5>{{item?.product?.name}}</h5>
+                    <span class="main-color mt-2">{{item?.product?.price | number}} EGP</span>
+                  </div>
+
+                  <!-- Quantity -->
+                  <div class="product-quantity mt-2">
+                    <label class="span_bold mb-1 d-block">Quantity:</label>
+                    <div class="quantity-selector d-flex align-items-center gap-2">
+                      <!-- زر النقصان -->
+                      <button type="button" (click)="decreaseQuantity(item)" [disabled]="quantity <= 1" class="btn count-btn">-</button>
+
+                      <!-- حقل العدد -->
+                      <input type="number" [(ngModel)]="quantity" min="1" class="form-control text-center" />
+
+                      <!-- زر الزيادة -->
+                      <button type="button" (click)="increaseQuantity(item)" class="btn count-btn">+</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ion-label>
+          </ion-item>
+
+          <ion-item-options side="end">
+            <ion-item-option color="danger" class="text-white">Delete</ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      }
+    </ion-list>
+
+    @if(cartProducts().length){
+      <div class="checkout p-3">
+        <ul class="list-unstyled d-flex flex-column gap-2 mb-0">
+          <li class="d-flex justify-content-between align-items-center">
+            <h5 class="m-0">Quntity</h5>
+            <span class="main-color fw-bold fs-15">{{cartCount()}} Piece(s)</span>
+          </li>
+
+          <li class="d-flex justify-content-between align-items-center">
+            <h5 class="m-0">Delivery</h5>
+            <span class="main-color fs-20">{{shippingValue()}} EGP</span>
+          </li>
+
+          <li class="d-flex justify-content-between align-items-center">
+            <h5 class="m-0">SubTotal</h5>
+            <span class="main-color fw-bold fs-20">{{subTotal()}} EGP</span>
+          </li>
+
+          <li class="d-flex justify-content-between align-items-start border-top pt-2">
+            <div class="d-flex flex-column">
+              <h5 class="m-0">Total</h5>
+              <!-- <span class="text-danger fw-medium">including 14% Taxes</span> -->
+            </div>
+            <span class="main-color fw-bold fs-20">{{subTotal() + shippingValue()}} EGP</span>
+          </li>
+        </ul>
+        <div class="btn-checkout text-center mt-2">
+          <button class="btn btn-submit fw-bold px-5 w-100 rounded-4 mt-2" routerLink="/checkout">Checkout</button>
+        </div>
+      </div>
+    }
+
+  </div>
+</ion-content>

@@ -1,0 +1,23 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>About</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="about-us">
+    @for (item of aboutContent; track $index) {
+      <div class="about-image">
+        <img loading="lazy" [src]="item?.picture" alt="item.title">
+      </div>
+
+      <div class="about-content p-3">
+        <h3 class="main-color" [innerHTML]="item?.title"></h3>
+        <p>{{item?.description}}</p>
+      </div>
+    }
+  </div>
+</ion-content>

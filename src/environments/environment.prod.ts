@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  baseUrl: 'https://xprsadmin.myxprs.com/rest_api/'
 };

@@ -1,0 +1,43 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+
+    <ion-title class="text-center">Notifications</ion-title>
+
+    <ion-buttons slot="end">
+      <div routerLink="/cart" class="cart-bar mx-2 position-relative text-center">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <app-cart-bar></app-cart-bar>
+      </div>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="notifications">
+    <ion-list>
+      @for (notification of allNotifications; track $index) {
+        <ion-item>
+          <div class="notification-image">
+            <img src="assets/icon/notification_active.svg" alt="">
+          </div>
+          <ion-label class="notification-content">
+            <h3 class="mb-2">{{ notification.title }}</h3>
+            <p>{{ notification.text }}</p>
+            <span>{{notification.time | date}}</span>
+          </ion-label>
+        </ion-item>
+      } @empty{
+        <div class="text-center p-3">
+          <p class="m-0">No notifications yet.</p>
+        </div>
+      }
+    </ion-list>
+  </div>
+
+  <app-tabs></app-tabs>
+</ion-content>

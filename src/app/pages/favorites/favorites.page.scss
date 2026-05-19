@@ -1,0 +1,59 @@
+$main-color: #81FB37;
+.offer-silde{
+  color: #fff;
+  text-align: start;
+  .card-image{
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid $main-color;
+  }
+  .stock-msg{
+    font-size: 12px;
+    color: #fff;
+    padding: 5px;
+    border-radius: 5px;
+    display: inline-block;
+  }
+  .icon-option{
+    i{
+      font-size: 1.1rem;
+      cursor: pointer;
+    }
+  }
+  .product-title{
+    font-size: 14px;
+  }
+  .price{
+    font-size: 16px;
+    font-weight: bold;
+  }
+}
+
+.fade-fave {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 2rem;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.animate-fade {
+  animation: fadeUp 1s forwards;
+}
+
+@keyframes fadeUp {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -80%) scale(1.5);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -120%) scale(2);
+  }
+}

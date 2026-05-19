@@ -1,0 +1,26 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Brands</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="row g-3">
+    @for (brand of allBrands; track $index) {
+      <div class="col-4">
+        <div class="brand pt-3 pb-3 mx-3" [routerLink]="'/products/brand/' + brand.seo_slug">
+          <div class="brand-image d-flex justify-content-center align-items-center rounded">
+            <img loading="lazy" class="rounded" [src]="brand.picture || 'assets/icon/xprs_spinner.gif'" [alt]="brand.name">
+          </div>
+
+          <div class="brand-content text-center">
+            <h5 class="mb-0">{{ brand.name }}</h5>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</ion-content>

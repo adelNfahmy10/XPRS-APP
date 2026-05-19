@@ -1,0 +1,27 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Delivery</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="privacy p-3">
+    <div class="privacy-image mb-4">
+      <img src="assets/images/delivery-image/shipping-dark.png" alt="">
+    </div>
+
+    <div class="privacy-content">
+      @for (item of deliveryContent; track $index) {
+        <div class="delivery-title">
+          <h3 class="main-color" [innerHTML]="item.title"></h3>
+        </div>
+
+        <div class="delivery-text" [innerHTML]="item.description">
+        </div>
+      }
+    </div>
+  </div>
+</ion-content>

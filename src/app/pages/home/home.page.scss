@@ -1,0 +1,18 @@
+$main-color: #81FB37;
+ion-title{
+  img{
+    width: 150px;
+  }
+}
+
+.auth-section{
+  background-color: #22222281;
+  & > span{
+    font-size: 14px;
+  }
+  .image-auth{
+    img{
+      width: 40px;
+    }
+  }
+}

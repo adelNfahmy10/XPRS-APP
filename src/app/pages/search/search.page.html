@@ -1,0 +1,70 @@
+<ion-content [fullscreen]="true">
+  <div class="search p-2">
+    <div class="search-inputs d-flex align-items-center gap-2">
+      <ion-searchbar
+        class="rounded p-0"
+        debounce="3s00"
+        color="dark"
+        placeholder="Search..."
+        [(ngModel)]="searchItem"
+        (input)="onSearchChange()"
+        >
+      </ion-searchbar>
+
+      <span routerLink="/home">Close</span>
+    </div>
+
+    <!-- Loading -->
+    @if (isLoading) {
+      <div>
+        Loading...
+      </div>
+    }
+
+    <!-- No Results -->
+    @if (noResults && !isLoading) {
+      <div>
+        {{noResults}}
+      </div>
+    }
+
+    <!-- Results -->
+    @if(searchItem){
+      <div class="products-category">
+        <ion-list>
+          @for (product of searchResults; track $index) {
+            <ion-item>
+              <ion-label>
+                <div class="row g-3 py-2">
+                  <div class="col-3">
+                    <div class="product-image position-relative d-flex justify-content-center align-items-center w-100 h-100 rounded">
+                      <img loading="lazy" [src]="product?.picture1 || product?.picture2 || 'assets/icon/xprs_spinner.gif'" [alt]="product?.name">
+                      @if(product?.availability == 'Out Of Stock'){
+                        <div class="out-of-stock position-absolute w-100 h-100 d-flex justify-content-center align-items-center rounded">
+                          <span class="rounded-4">Sold Out</span>
+                        </div>
+                      }
+
+                    </div>
+                  </div>
+
+                  <div class="col-9">
+                    <div class="product-details d-flex flex-column justify-content-center">
+                      <h5>{{product?.name}}</h5>
+                      <span class="main-color mt-2">{{product?.price | number}} EGP</span>
+                    </div>
+                  </div>
+                </div>
+              </ion-label>
+            </ion-item>
+          }
+        </ion-list>
+      </div>
+    } @else {
+      <div class="text-center my-3" routerLink="/categories">
+        <span class="text-center border rounded px-2 py-1 main-bg fw-bold">Shop Now</span>
+      </div>
+    }
+
+  </div>
+</ion-content>

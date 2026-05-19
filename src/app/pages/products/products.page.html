@@ -1,0 +1,47 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Products</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="products-category">
+    <ion-list>
+      @for (product of productsRelated; track $index) {
+        <ion-item>
+          <ion-label>
+            <div class="row g-3 py-2" [routerLink]="'/product/' + product.id">
+              <div class="col-3">
+                <div class="product-image position-relative d-flex justify-content-center align-items-center w-100 h-100 rounded">
+                  <img loading="lazy" [src]="product?.picture1 || product?.picture2 || 'assets/icon/xprs_spinner.gif'" [alt]="product?.name">
+                  @if(product?.availability == 'Out Of Stock'){
+                    <div class="out-of-stock position-absolute w-100 h-100 d-flex justify-content-center align-items-center rounded">
+                      <span class="rounded-4">Sold Out</span>
+                    </div>
+                  }
+
+                </div>
+              </div>
+
+              <div class="col-9">
+                <div class="product-details d-flex flex-column justify-content-center">
+                  <h5>{{product?.name}}</h5>
+                  <span class="main-color mt-2">{{product?.price | number}} EGP</span>
+                </div>
+              </div>
+            </div>
+          </ion-label>
+        </ion-item>
+      } @empty {
+        <h3 class="text-center">No Products Found</h3>
+        <div class="shop-btn text-center my-3" routerLink="/home">
+          <span class="text-center border rounded px-2 py-1 main-bg fw-bold">Shop Now</span>
+        </div>
+      }
+
+    </ion-list>
+  </div>
+</ion-content>

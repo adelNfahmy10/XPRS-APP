@@ -1,0 +1,23 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Store Locator</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  @for (store of allStores; track $index) {
+    <div class="stores pt-3 pb-3 mx-3">
+      <div class="store-image rounded">
+        <img loading="lazy" class="rounded" [src]="store.picture || 'assets/icon/xprs_spinner.gif'" [alt]="store.name">
+      </div>
+
+      <div class="store-content text-center">
+        <h5 class="mb-0">{{ store.name }}</h5>
+      </div>
+    </div>
+  }
+
+</ion-content>

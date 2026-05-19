@@ -1,0 +1,400 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="text-center me-5">Product</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+<section class="product py-3" id="product">
+  <div class="slider-images mb-3">
+    <div class="gallery p-2 rounded position-relative">
+      <!-- Main Image -->
+      @if (mainImage) {
+        <div class="main-image">
+          <img [src]="mainImage.src" [alt]="mainImage.alt" />
+        </div>
+      }
+
+      <!-- Navigation Arrows -->
+      <!-- <button class="prev" (click)="prevImage()">&#10094;</button>
+      <button class="next" (click)="nextImage()">&#10095;</button> -->
+    </div>
+
+    <!-- Thumbnails -->
+    <div class="thumbnails mt-2 d-flex justify-content-center gap-2">
+      @for (img of productImages; track $index) {
+        <img
+          [src]="img?.src"
+          [alt]="img?.alt"
+          [class.active]="$index === mainIndex"
+          (click)="changeMain($index)"
+        />
+      }
+
+    </div>
+  </div>
+
+  <div class="prodcut-info p-3">
+    <!-- Titles -->
+    <div class="product-title">
+      <h3 class="mb-2">{{ productData?.name }}</h3>
+      <h5 class="m-0">{{ productData?.category?.name }}</h5>
+    </div>
+
+    <!-- Availablity -->
+    <div class="d-flex justify-content-between align-items-center">
+      @if(productData?.availability == "Out Of Stock"){
+        <span class="bg-danger px-3 rounded-3">{{productData?.availability}}</span>
+      } @else if(productData?.availability == 'In Stock') {
+        <span class="main-bg px-3 rounded-3">{{productData?.availability}}</span>
+      }
+      <span
+        (click)="addToFavorite(productData)"
+        class="fav-btn rounded-2 p-2"
+      >
+        @if(isFavorite(productData)){
+          <i class="fa-solid fa-heart main-color" ></i>
+        } @else if(!isFavorite(productData)) {
+          <i class="fa-regular fa-heart main-color" ></i>
+        }
+      </span>
+
+    </div>
+
+    <!-- Rate -->
+    @if(productData?.reviews?.length != 0){
+      @if(productData?.no_of_rating){
+        <div class="d-flex align-items-center mt-2">
+          @for ( rate of [].constructor(productData?.no_of_rating); track $index) {
+            <i class="fa-solid fa-star stars"></i>
+          }
+        </div>
+      }
+      <div class="d-flex align-items-center mt-2">
+        @for ( rate of [].constructor(5 - productData?.no_of_rating); track $index) {
+          <i class="fa-regular fa-star stars"></i>
+        }
+        <span>({{productData?.reviews?.length}} Reviews)</span>
+      </div>
+    }
+
+    <!-- Quantity -->
+    <div class="product-quantity mt-2">
+      <label class="span_bold mb-1 d-block">Quantity:</label>
+      <div class="quantity-selector d-flex align-items-center gap-2">
+        <!-- زر النقصان -->
+        <button type="button" (click)="decreaseQuantity()" [disabled]="quantity <= 1" class="btn count-btn">-</button>
+
+        <!-- حقل العدد -->
+        <input type="number" [(ngModel)]="quantity" min="1" class="form-control text-center" />
+
+        <!-- زر الزيادة -->
+        <button type="button" (click)="increaseQuantity()" class="btn count-btn">+</button>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="Payment-way my-3">
+      <div class="btns d-flex flex-wrap justify-content-center align-items-center gap-2">
+        <!-- Full Price -->
+        @if(!productData?.is_preorder){
+          <button
+            type="button"
+            class="tab-btn rounded-2 text-center main-border"
+            [ngClass]="{
+              'active-tab text-white main-bg': tabsSection == 'fullPrice'
+            }"
+            (click)="toggleSection('fullPrice')"
+          >
+            Full Price
+          </button>
+        }
+
+        <!-- Installments -->
+        <button
+          type="button"
+          class="tab-btn rounded-2 text-center main-border"
+          [ngClass]="{
+            'active-tab text-white main-bg': tabsSection == 'installments'
+          }"
+          (click)="toggleSection('installments'); choosePaymentType('installments')"
+        >
+          Installments
+        </button>
+
+        <!-- Pre Order -->
+        @if(productData?.is_preorder){
+          <button
+            type="button"
+            class="tab-btn rounded-2 text-center main-border"
+            [ngClass]="{
+              'active-tab text-white main-bg': tabsSection == 'preOrder'
+            }"
+            (click)="toggleSection('preOrder')"
+          >
+            Pre Order
+          </button>
+        }
+
+        <!-- Pay Later -->
+        <button
+          type="button"
+          class="tab-btn rounded-2 text-center main-border"
+          [ngClass]="{
+            'active-tab': tabsSection == 'payLater'
+          }"
+          (click)="toggleSection('payLater')"
+        >
+          Pay Later
+        </button>
+      </div>
+
+
+    </div>
+
+    <!-- Conetnts Tabs -->
+    <div class="contents text-center">
+      @if(tabsSection == 'fullPrice'){
+        <div class="fullPrice-content">
+          <!-- Price -->
+          <div class="price">
+            <p class="fw-medium mt-1">
+              Price: <br>
+              @if(productData?.old_price){
+                <span class="old-price me-1">{{ productData?.old_price | number}} EGP</span>
+              }
+              <span class="main-color fw-bold fs-3">{{ productData?.price | number}} EGP</span>
+            </p>
+            @if(productData?.old_price){
+              <p class="save-money">
+                Save {{productData?.old_price - productData?.price | number}} EGP
+              </p>
+            }
+
+            @if(productData?.price_for_installments != 0 && productData?.price_for_installments){
+              <p>or from {{productData?.price_for_installments }}/{{productData?.month_for_instalment}} mo</p>
+            }
+
+            @if(productData?.price_for_installments == 0 && productData?.price_for_installments){
+              <p>or from {{productData?.price_for_instalment }}/{{productData?.month_for_instalment}} mo</p>
+            }
+          </div>
+        </div>
+      } @else if(tabsSection == 'installments'){
+        <div class="installment-content">
+          @if(payment_type == 'installments'){
+            <p>{{installmentMsg}}</p>
+            <div class="banks">
+              @for (b of filtered_banks; track $index) {
+                @if(!b.hidden && !b.pay_later){
+                  <div class="d-flex align-items-center">
+                    <input
+                      type="radio"
+                      name="method"
+                      [value]="b.bank_key"
+                      [id]="b.bank_key"
+                      [(ngModel)]="bank"
+                      (change)="calculate(down,b.months[0]?.installment_months,bank, b.months[0]?.interest)"
+                    />
+                    <label class="new-bank" [for]="b.bank_key">
+                      <img [src]="b.logo" [alt]="b.bank_key" [title]="b.bank_key" class="w-25">
+                    </label>
+                  </div>
+                }
+              }
+            </div>
+          }
+
+          @for ( b of filtered_banks; track $index) {
+            @if(bank == b.bank_key){
+              @for (m of b.months; track $index) {
+                <div class="d-flex align-items-center">
+                  <input
+                    type="radio"
+                    name="install"
+                    [(ngModel)]="install"
+                    [value]="m.installment_months"
+                    [id]="'month_' + m.installment_months"
+                    (change)="calculate(down,install,bank,m.interest)"
+                  />
+                  <label [for]="'month_' + m.installment_months">
+                    {{m.installment_months}} months
+                  </label>
+                </div>
+              }
+            }
+          }
+        </div>
+      } @else if(tabsSection == 'payLater'){
+        <div class="payLater-content">
+          <p>Pay later with any bank card</p>
+          @for (b of filtered_banks; track $index) {
+            @if(!b.hidden && !b.pay_later){
+              <div class="d-flex align-items-center">
+                <input
+                  type="radio"
+                  name="method"
+                  [value]="b.bank_key"
+                  [id]="b.bank_key"
+                  [(ngModel)]="bank"
+                  (change)="calculate(down,b.months[0]?.installment_months,bank, b.months[0]?.interest)"
+                />
+                <label class="new-bank" [for]="b.bank_key">
+                  <img [src]="b.logo" [alt]="b.bank_key" [title]="b.bank_key" class="w-25">
+                </label>
+              </div>
+            }
+          }
+          @if (bank != 9999) {
+            @for ( b of filtered_banks; track $index) {
+              @if(bank == b.bank_key){
+                @for (m of b.months; track $index) {
+                  <div class="d-flex align-items-center">
+                    <input
+                      type="radio"
+                      name="install"
+                      [(ngModel)]="install"
+                      [value]="m.installment_months"
+                      [id]="'month_' + m.installment_months"
+                      (change)="calculate(down,install,bank,m.interest)"
+                    />
+                    <label [for]="'month_' + m.installment_months">
+                      {{m.installment_months}} months
+                    </label>
+                  </div>
+                }
+              }
+            }
+
+            <!-- Price -->
+            <!-- <div class="price bottom lh mb-3 mt-2">
+              @if(oldDownPrice){
+                <span class="p"><sup>EGP</sup>{{quantity * oldDownPrice || 0 | number}} </span>
+              }
+              @if(!oldDownPrice){
+                <span class="p"><sup>EGP</sup>{{quantity * downPrice || 0 | number}} </span>
+              }
+            </div> -->
+          }
+        </div>
+      } @else if(tabsSection == 'preOrder'){
+        <div class="perOrder-content">
+          <!-- <p>Pay after 30 days: <strong>$1000</strong></p> -->
+          <p>No interest if paid within the period.</p>
+        </div>
+      }
+    </div>
+
+    <!-- Add To Cart Btn -->
+    <div class="add-to-cart">
+      @if(!isCheckProduct){
+        @if(productData?.availability == 'In Stock'){
+          <button class="btn main-bg btn-add w-100" (click)="addToCart()">
+            {{productData?.is_preorder == true ? 'Pre Order' : 'Add to Cart'}}
+          </button>
+        }
+      } @else if(isCheckProduct) {
+        @if(productData?.availability == 'In Stock'){
+          <button class="btn w-100 mt-3 disabled" disabled >
+            {{productData?.is_preorder == true ? 'Pre Order' : 'Already in Cart'}}
+          </button>
+        }
+      }
+
+      <!-- Notify Me Section -->
+
+      <!-- @if(productData?.availability == "Out Of Stock"){
+        @if(out_of_stock){
+          <div class="notify mt-2">
+            <div class="form-check form-checkbox-success mb-2">
+              <input [checked]="notify_checked" (change)="notifyMe($event)" data-bs-toggle="modal" data-bs-target="#exampleModal" type="checkbox" class="form-check-input" id="customCheckcolor2" checked>
+              <label class="form-check-label" [class.main-color]="notify_checked" for="customCheckcolor2">Notify Me!</label>
+            </div>
+
+            <p>
+              This product is currently out of stock.
+              {{ notify_checked ? 'You will be notified once it is back in stock.' : 'Click to get notified once it is back.' }}
+            </p>
+          </div>
+        }
+      } -->
+
+    </div>
+  </div>
+
+
+  <!-- Related Products -->
+  <div class="swiper special-slider mt-4">
+    <h2 class="m-0 mb-2 main-color">More Like This</h2>
+
+    <swiper-container slides-per-view="2" space-between="10" class="swiper-wrapper">
+      @for (item of productsRelated; track $index) {
+        <swiper-slide class="rounded-4 h-100">
+          <div class="card offer-silde bg-transparent">
+
+            <div class="card-image position-relative">
+              <img loading="lazy"[src]="item?.picture1 || 'assets/icon/xprs_spinner.gif'" [alt]="item?.picture1_alt" class="offer-img rounded-0 cr" [routerLink]="'/product/' + item.id"/>
+
+              <span class="icon-option position-absolute d-flex flex-column gap-1 top-0 start-0 p-1">
+                  <i
+                    (click)="addToFavorite(item)"
+                    class="ms-1"
+                    [ngClass]="
+                      isFavorite(item)
+                        ? 'fa-solid fa-heart main-color'
+                        : 'fa-regular fa-heart main-color'
+                    "
+                  ></i>
+              </span>
+
+              <span class="stock-msg position-absolute top-0 end-0 p-1">
+                @if(item?.availability != 'In Stock'){
+                  <span class="badge bg-danger text-white fs-13">
+                    Sold Out
+                  </span>
+                } @else{
+                  <span class="badge main-bg text-white fs-13">
+                    In Stock
+                  </span>
+                }
+              </span>
+
+              <span class="main-color fade-fave" [ngClass]="{'animate-fade': showFadeAnimation(item)}">
+                <i class="fa-solid fa-heart main-color"></i>
+              </span>
+            </div>
+
+            <div class="card-body px-1 pb-0" [routerLink]="'/product/' + item.id">
+              <h6 class="m-0 product-title">{{ item.name.slice(0,30) }}...</h6>
+            </div>
+
+            <div class="card-footer d-flex justify-content-between align-items-center px-1" >
+              <p class="m-0 p-0 main-color price">
+                {{ item.price | number }} EGP
+              </p>
+              <!-- @if (item?.availability == 'In Stock') {
+                <ion-button
+                  fill="clear"
+                  (click)="addToCart(item)"
+                  class="btn-add"
+                >
+                  <i
+                    class="fa-solid"
+                    [ngClass]="{
+                      'fa-cart-shopping main-bg text-white': isCart(item),
+                      'fa-cart-arrow-down main-color': !isCart(item)
+                    }"
+                  ></i>
+                </ion-button>
+              } -->
+            </div>
+          </div>
+        </swiper-slide>
+      }
+    </swiper-container>
+  </div>
+</section>
+</ion-content>

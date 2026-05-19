@@ -35,3 +35,19 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
+
+
+$main-color: #81FB37;
+*{
+  transition: all .3s ease-in-out;
+}
+.main-color{
+  color: $main-color;
+}
+.main-bg{
+  background-color: $main-color;
+}
+.main-border{
+  border: 1px solid $main-color;
+}
+

@@ -1,0 +1,10 @@
+  <!-- Home Slider-->
+  <div class="swiper">
+    <swiper-container pagination="true">
+      @for (silde of homeSlider; track $index) {
+        <swiper-slide>
+          <img loading="lazy" [src]="silde.mobile_picture || 'assets/icon/xprs_spinner.gif'" [alt]="silde.mobile_picture" class="img-fluid rounded-4" />
+        </swiper-slide>
+      }
+    </swiper-container>
+  </div>

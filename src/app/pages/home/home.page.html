@@ -1,0 +1,74 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+
+    <ion-title class="text-center">
+      <img loading="lazy" src="assets/icon/XPRS_LOGO_balck.png" alt="xprs">
+    </ion-title>
+
+    <ion-buttons slot="end">
+      <div class="mx-2 d-flex align-items-center gap-2">
+        <div class="search-bar">
+          <i class="fa-solid fa-magnifying-glass" routerLink="/search"></i>
+        </div>
+
+        <div routerLink="/cart" class="cart-bar position-relative text-center">
+          <i class="fa-solid fa-cart-shopping"></i>
+          <app-cart-bar></app-cart-bar>
+        </div>
+      </div>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">home</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <section class="home pb-5 mb-3">
+      <app-main-home-slider></app-main-home-slider>
+
+      <div class="container-fluid">
+        <!-- Categories Slider -->
+        <app-categories-slider></app-categories-slider>
+
+        <!-- Auth -->
+        <div class="auth-section rounded-4 d-flex align-items-center justify-content-evenly text-center px-4 py-2">
+          <span class="main-color">Sign Up</span>
+            <div class="position-relative">
+              <div class="image-auth">
+                <img loading="lazy" class="auth-logo-img" src="assets/icon/TVCLOGO.png" alt="">
+              </div>
+              <span>|</span>
+            </div>
+          <span class="main-color">Login</span>
+        </div>
+
+        <!-- Brand Slider -->
+        <app-brands-sliders></app-brands-sliders>
+
+        <!-- Speicals Offers -->
+        <app-speicals-offers-sliders></app-speicals-offers-sliders>
+
+        <!-- Essentials -->
+        <app-essentials-sliders></app-essentials-sliders>
+
+        <!-- Top Selling -->
+        <app-top-selling-sliders></app-top-selling-sliders>
+
+        <!-- Special Selling -->
+        <!-- <app-special-selling-sliders></app-special-selling-sliders> -->
+      </div>
+    </section>
+
+    <app-tabs></app-tabs>
+
+  </ion-content>
+</ion-content>

@@ -1,0 +1,387 @@
+$main-color: #81FB37;
+.product{
+  // Silder Image
+  .main-image {
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity 0.5s ease-in-out;
+    }
+  }
+  .prev,
+  .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #82fb3778;
+    color: #333333c0;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 3px;
+  }
+  .prev {
+    left: 10px;
+  }
+  .next {
+    right: 10px;
+  }
+  .thumbnails img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    cursor: pointer;
+    opacity: 0.6;
+    border-radius: 4px;
+    transition: transform 0.3s, opacity 0.3s;
+
+    &.active {
+      opacity: 1;
+      transform: scale(1.05);
+      border: 2px solid $main-color;
+    }
+  }
+
+  .prodcut-info{
+    .product-title{
+      h3{
+        font-weight: 700;
+        font-size: 20px;
+      }
+      h5{
+        font-weight: 600;
+        font-size: 18px;
+      }
+    }
+
+    .fav-btn{
+      border: 1px solid $main-color;
+    }
+
+    .count-btn{
+      background-color: $main-color;
+      border-radius: 50%;
+      border-color: $main-color;
+    }
+
+    .quantity-selector button {
+      width: 25px;
+      height: 25px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0;
+      font-size: 1.2rem;
+    }
+    .quantity-selector input {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      padding: 0;
+    }
+    /* Chrome, Edge, Safari */
+    input[type=number]::-webkit-outer-spin-button,
+    input[type=number]::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    /* Firefox */
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
+
+
+    .stars{
+      color: yellow;
+      font-size: 16px;
+      &.fa-regular{
+        color: rgb(115, 115, 0);
+      }
+    }
+
+    .tab-btn {
+      transition: all 0.2s ease;
+      cursor: pointer;
+      background-color: transparent;
+      border: 1px solid #ccc;
+      padding: 8px 15px;
+    }
+
+    .active-tab {
+      border-color: $main-color;
+      background-color: $main-color;
+    }
+
+    .contents{
+      p{
+        font-size: 12px;
+        color: #bbbbbb;
+        margin: 0;
+      }
+    }
+
+    .old-price {
+      position: relative;
+      color: #888;
+      font-size: .8rem;
+      display: inline-block;
+    }
+
+    .old-price::after {
+      content: "";
+      position: absolute;
+      top: 60%;
+      left: 5px;
+      width: 90%;
+      height: 100%;
+      border-top: 2px solid #888;
+      transform: rotate(-15deg);
+      transform-origin: left center;
+    }
+
+    .btn-add{
+      &:focus{
+        background-color: $main-color;
+      }
+    }
+  }
+}
+
+
+
+
+.swiper{
+  height: 100%;
+  width: 100%;
+  swiper-slide{
+    width: 100%;
+    height: 100%;
+    img{
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+h6{
+  font-size: 12px;
+}
+.price{
+  font-size: 12px;
+}
+.details-link{
+  font-size: 10px;
+}
+
+.swiper.related-slider{
+  .related-cart{
+    transition: all .5s ease;
+    img{
+      transition: all .5s ease;
+      filter: none !important;
+    }
+
+    &:hover{
+      box-shadow: 0 0 10px $main-color;
+    }
+  }
+}
+
+.related-image{
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+}
+
+@media (max-width:567px) {
+  .cat-slide {
+    img{
+      margin: 0 auto;
+      width: 75% !important;
+    }
+  }
+}
+.fade-fave {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 2rem;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.animate-fade {
+  animation: fadeUp 1s forwards;
+}
+
+@keyframes fadeUp {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -80%) scale(1.5);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -120%) scale(2);
+  }
+}
+$main-color: #81FB37;
+.logo-container{
+  img{
+    width: 120px;
+  }
+}
+swiper-container {
+  width: 100%;
+  height: 100%;
+}
+
+swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+swiper-slide {
+  &.category-slide{
+    flex-direction: column;
+    .cat-slide{
+      border: 2px solid $main-color;
+    }
+    .slide-title{
+      font-size: 14px;
+    }
+  }
+
+  &.brand-slide{
+    img{
+      filter: drop-shadow(0 0 10px $main-color);
+    }
+  }
+
+  & .offer-silde{
+    color: #fff;
+    text-align: start;
+    .card-image{
+      padding: 10px;
+      border-radius: 10px;
+      border: 2px solid $main-color;
+    }
+    .stock-msg{
+      font-size: 12px;
+      color: #fff;
+      padding: 5px;
+      border-radius: 5px;
+      display: inline-block;
+    }
+    .icon-option{
+      i{
+        font-size: 1.1rem;
+        cursor: pointer;
+      }
+    }
+    .product-title{
+      font-size: 14px;
+    }
+    .price{
+      font-size: 16px;
+      font-weight: bold;
+    }
+  }
+
+}
+
+.auth-section{
+  background-color: #22222281;
+  & > span{
+    font-size: 14px;
+  }
+  .image-auth{
+    position: absolute;
+    top: -40px;
+    left: -38px;
+    width: 80px;
+    z-index: 9999;
+  }
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  p {
+    flex: 1;
+    margin: 0;
+  }
+
+  .btn-add {
+    --padding-start: 0;
+    --padding-end: 0;
+    --padding-top: 0;
+    --padding-bottom: 0;
+    --box-shadow: none;
+    min-height: auto;
+    margin: 0;
+
+    i {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid $main-color;
+      border-radius: 10px;
+      font-size: 18px;
+    }
+
+    .fa-cart-shopping {
+      border: none;
+    }
+  }
+}
+
+.fade-fave {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 2rem;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.animate-fade {
+  animation: fadeUp 1s forwards;
+}
+
+@keyframes fadeUp {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -80%) scale(1.5);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -120%) scale(2);
+  }
+}

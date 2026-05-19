@@ -1,0 +1,13 @@
+$main-color: #81FB37;
+
+.contact-form{
+  input, textarea{
+    color: #fff;
+  }
+  .btn-submit{
+    background-color: $main-color;
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+}

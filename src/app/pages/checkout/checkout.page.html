@@ -1,0 +1,136 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/cart"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="text-center me-5">Checkout</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <section class="checkout p-3" id="checkout">
+    <div class="checkout-form">
+      <div class="form-title mb-3">
+        <h3 class="m-0 mb-2">Address</h3>
+        <h5 class="m-0">Shipping</h5>
+      </div>
+      <form class="d-flex flex-column gap-3" [formGroup]="checkoutForm">
+        <!-- Name -->
+        <div class="fullName">
+          <label for="fullName">Name</label>
+          <input id="fullName" formControlName="_name" name="fullName" type="text" class="form-control w-100" placeholder="*Name...">
+        </div>
+
+        <!-- Email -->
+        <div class="email">
+          <label for="email">Email</label>
+          <input id="email" formControlName="_email" name="email" type="email" class="form-control w-100" placeholder="*Email...">
+        </div>
+
+        <!-- Phone -->
+        <div class="phone">
+          <label for="phone">Phone</label>
+          <input id="phone" formControlName="_phone" name="phone" type="tel" class="form-control w-100" placeholder="*Phone Number...">
+        </div>
+
+        <!-- Address -->
+        <div class="address">
+          <label for="address">Address</label>
+          <input id="address" formControlName="_address" name="address" type="text" class="form-control w-100" placeholder="*Address...">
+        </div>
+
+        <!-- City -->
+        <div class="city">
+          <label for="city">City</label>
+          <select
+            selectFormInput
+            class="form-control"
+            id="city"
+            placeholder="Select Country"
+            formControlName="_city"
+            name="city"
+          >
+            <option value="" selected disabled>Choose a city</option>
+            @for (city of cities; track $index) {
+              <option [value]="city">{{city}}</option>
+            }
+          </select>
+        </div>
+
+        <!-- Check Biling Address-->
+        <p class="title-biling fw-bold mt-1 mb-0">Biling</p>
+        <div class="checkBiling w-100 d-flex align-items-center gap-1">
+          <input
+            (click)="toggleBilingAddress()"
+            type="checkbox"
+            class="form-check-input m-0"
+            id="customCheckcolor2"
+          />
+          <label class="form-check-label m-0" for="customCheckcolor2">Use the same as above </label>
+        </div>
+
+        @if(showBilingAddress){
+          <!-- Biling City -->
+          <div class="city">
+            <label for="bilingCity">City</label>
+            <select
+              selectFormInput
+              class="form-control"
+              id="bilingCity"
+              placeholder="Select Country"
+              name="bilingCity"
+              formControlName="_biling_city"
+            >
+              <option value="" selected disabled>Choose a city</option>
+              @for (city of cities; track $index) {
+                <option [value]="city">{{city}}</option>
+              }
+            </select>
+          </div>
+
+          <!-- Biling Address -->
+          <div class="address">
+            <label for="biligAddress">Address</label>
+            <input id="biligAddress" formControlName="_billing_address" name="biligAddress" type="text" class="form-control w-100" placeholder="*Address...">
+          </div>
+        }
+
+        <!-- Hear Us -->
+        <!-- <div class="hear-us">
+          <select
+            selectFormInput
+            class="form-control"
+            id="Hear About Us"
+            name="Hear About Us"
+            formControlName="hear"
+          >
+            <option value="" selected disabled>How did you hear about us?</option>
+            @for (hear of hearAboutUs; track $index) {
+              <option [value]="hear">{{hear}}</option>
+            }
+          </select>
+        </div> -->
+
+
+        <div class="payments">
+          <p class="title-form fw-bold mb-1">Payment Method</p>
+          @for (pay of payments_arr_avail; track $index) {
+            @if(pay.code == 1){
+              <div class="form-check form-check-inline d-flex align-items-center gap-2">
+                <input class="form-check-input" formControlName="payment_method" type="radio" name="inlineRadioOptions" id="inlineRadio1" [value]="pay.code">
+                <div>
+                  <img src="assets/images/checkout-image/cash.png" class="payment-image" [alt]="pay.name">
+                  <label class="form-check-label" for="inlineRadio1">{{pay.name}}</label>
+                </div>
+              </div>
+            }
+          }
+        </div>
+
+        <div class="btn-checkout text-center mt-2">
+          <button class="btn checkout w-100 rounded-4 fw-bold" type="button" [disabled]="checkoutForm.invalid" (click)="submitCheckout()">Checkout</button>
+        </div>
+      </form>
+    </div>
+  </section>
+</ion-content>

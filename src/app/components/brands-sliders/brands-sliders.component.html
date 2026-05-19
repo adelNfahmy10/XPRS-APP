@@ -1,0 +1,18 @@
+<div class="swiper brand-slider mt-4">
+  <h2 class="m-0 mb-2 main-color">Brands</h2>
+  <swiper-container slides-per-view="3" space-between="10" class="swiper-wrapper">
+    @for (brand of brands; track $index) {
+      <swiper-slide class="rounded-4 brand-slide cr h-100">
+        <div class="bran-slide rounded-4 h-100" [routerLink]="'/products/brand/' + brand.seo_slug">
+          <img
+            [routerLink]="'/products//brand/' + brand.seo_slug"
+            [src]="brand.picture || 'assets/icon/xprs_spinner.gif'"
+            [alt]="brand.name"
+            loading="lazy"
+            class="img-fluid rounded-4"
+          />
+        </div>
+      </swiper-slide>
+    }
+  </swiper-container>
+</div>

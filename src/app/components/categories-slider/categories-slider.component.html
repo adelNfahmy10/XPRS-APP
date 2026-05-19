@@ -1,0 +1,20 @@
+<div class="swiper category-slider mt-4">
+  <h2 class="m-0 mb-2 main-color fw-bold">Categories</h2>
+  <swiper-container slides-per-view="3" space-between="10" class="swiper-wrapper" >
+  @for (cat of categories; track $index) {
+  <swiper-slide class="rounded-4 category-slide cr h-100">
+    <div class="cat-slide rounded-4 h-100" [routerLink]="'/products/category/' + cat.id">
+    <img
+      [routerLink]="'/products/category/' + cat.id"
+      [src]="cat.picture || 'assets/icon/xprs_spinner.gif'"
+      [alt]="cat.name"
+      loading="lazy"
+      class="img-fluid rounded-4"
+    />
+    </div>
+    <p class="text-center slide-title mt-2">{{cat.name}}</p>
+  </swiper-slide>
+
+  }
+  </swiper-container>
+</div>

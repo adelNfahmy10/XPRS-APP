@@ -1,9 +1,11 @@
 
-import { Component } from '@angular/core';
+import { Component, effect, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { IonApp, IonSplitPane, IonMenu, IonContent, IonList, IonListHeader, IonNote, IonMenuToggle, IonItem, IonIcon, IonLabel, IonRouterOutlet, IonRouterLink } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, heartOutline, heartSharp, archiveOutline, archiveSharp, trashOutline, trashSharp, warningOutline, warningSharp, bookmarkOutline, bookmarkSharp } from 'ionicons/icons';
+import { CartService } from 'src/core/services/cart/cart-service';
+import { FavoriteService } from 'src/core/services/favorites/favorite-service';
 
 @Component({
   selector: 'app-root',
@@ -12,16 +14,46 @@ import { mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, heartOutlin
   imports: [RouterLink, RouterLinkActive, IonApp, IonSplitPane, IonMenu, IonContent, IonList, IonListHeader, IonNote, IonMenuToggle, IonItem, IonIcon, IonLabel, IonRouterLink, IonRouterOutlet],
 })
 export class AppComponent {
+  private readonly _CartService = inject(CartService)
+  private readonly _FavoriteService = inject(FavoriteService)
+
+  token = this._CartService.token
+  cartId = this._CartService.cartId
+  favCount = this._FavoriteService.favoriteItemCount;
+
   public appPages = [
-    { title: 'Inbox', url: '/folder/inbox', icon: 'mail' },
-    { title: 'Outbox', url: '/folder/outbox', icon: 'paper-plane' },
-    { title: 'Favorites', url: '/folder/favorites', icon: 'heart' },
-    { title: 'Archived', url: '/folder/archived', icon: 'archive' },
-    { title: 'Trash', url: '/folder/trash', icon: 'trash' },
-    { title: 'Spam', url: '/folder/spam', icon: 'warning' },
+    { title: 'Home', url: '/home', icon: 'mail' },
+    { title: 'Shop', url: '/categories'},
+    { title: 'Store Locator', url: '/store-locator'},
+    { title: 'Brands', url: '/brands'},
+    { title: `My Favorites`, url: '/favorites'},
+    { title: 'About', url: '/about'},
+    { title: 'Contact Us', url: '/contact-us'},
+    { title: 'Privecy', url: '/privacy'},
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
   constructor() {
     addIcons({ mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, heartOutline, heartSharp, archiveOutline, archiveSharp, trashOutline, trashSharp, warningOutline, warningSharp, bookmarkOutline, bookmarkSharp });
   }
+
+  ngOnInit(): void {
+    if(!this.cartId() && !this.token()){
+      this.addCart()
+    }
+  }
+
+  addCart():void{
+    this._CartService.addCart().subscribe({
+      next:(res)=>{
+        if(!this.token()){
+          localStorage.setItem('xprsCartId', res.id)
+          this.cartId.set(localStorage.getItem('xprsCartId'))
+        }
+      }
+    })
+  }
+
+
+
+
 }

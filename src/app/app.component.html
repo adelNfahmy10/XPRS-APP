@@ -3,20 +3,42 @@
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
         <ion-list id="inbox-list">
-          <ion-list-header>Inbox</ion-list-header>
-          <ion-note>hi&#64;ionicframework.com</ion-note>
+          <div class="head-menu d-flex align-items-center gap-3 pb-2">
+            <div class="logo">
+              <img
+                src="assets/icon/logo-sidemenu.png"
+                alt="xprs"
+                class="logo-img"
+              >
+            </div>
 
+            <div class="header-title h-100">
+              <h4 class="mb-0 main-color">Welcome Back!</h4>
+            </div>
+
+          </div>
           @for (p of appPages; track p; let i = $index) {
             <ion-menu-toggle auto-hide="false">
               <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
-                <ion-icon aria-hidden="true" slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
-                <ion-label>{{ p.title }}</ion-label>
+                <ion-label>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center gap-2 w-100">
+                      <span>{{ p.title }}</span>
+                      @if(p.title == 'My Favorites'){
+                        <span class="favCount fw-bold">
+                          {{ favCount() }}
+                        </span>
+                      }
+                    </div>
+                    <i class="fa-solid fa-chevron-right"></i>
+                  </div>
+                </ion-label>
               </ion-item>
             </ion-menu-toggle>
           }
         </ion-list>
 
-        <ion-list id="labels-list">
+        <!-- <ion-list id="labels-list">
           <ion-list-header>Labels</ion-list-header>
 
           @for (label of labels; track label) {
@@ -25,7 +47,8 @@
               <ion-label>{{ label }}</ion-label>
             </ion-item>
           }
-        </ion-list>
+        </ion-list> -->
+
       </ion-content>
     </ion-menu>
     <ion-router-outlet id="main-content"></ion-router-outlet>
