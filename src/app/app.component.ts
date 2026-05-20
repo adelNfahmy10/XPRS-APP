@@ -6,8 +6,11 @@ import { addIcons } from 'ionicons';
 import { mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, heartOutline, heartSharp, archiveOutline, archiveSharp, trashOutline, trashSharp, warningOutline, warningSharp, bookmarkOutline, bookmarkSharp } from 'ionicons/icons';
 import { CartService } from 'src/core/services/cart/cart-service';
 import { FavoriteService } from 'src/core/services/favorites/favorite-service';
-import { SplashScreen } from '@capacitor/splash-screen';
 import { NgxSpinnerComponent } from "ngx-spinner";
+
+// Permisions
+import { Geolocation } from '@capacitor/geolocation';
+import { PushNotifications } from '@capacitor/push-notifications';
 
 @Component({
   selector: 'app-root',
@@ -41,6 +44,8 @@ export class AppComponent {
   }
 
   ngOnInit(): void {
+    this.initPush();
+
     const id = this.cartId();
 
     if (!id && !this.token()) {
@@ -85,6 +90,41 @@ export class AppComponent {
 
         this.addCart();
       }
+    });
+  }
+
+  async initPush() {
+
+    // 1. Request Permission
+    const perm = await PushNotifications.requestPermissions();
+
+    if (perm.receive !== 'granted') {
+      console.log('Push permission denied');
+      return;
+    }
+
+    // 2. Register device
+    await PushNotifications.register();
+
+    // 3. Get token
+    PushNotifications.addListener('registration', (token) => {
+      console.log('FCM Token:', token.value);
+      // ابعته للـ backend
+    });
+
+    // 4. Success handler
+    PushNotifications.addListener('registrationError', (err) => {
+      console.log('Registration error:', err);
+    });
+
+    // 5. Notification received (app open)
+    PushNotifications.addListener('pushNotificationReceived', (notification) => {
+      console.log('Notification received:', notification);
+    });
+
+    // 6. Notification tap
+    PushNotifications.addListener('pushNotificationActionPerformed', (action) => {
+      console.log('Notification clicked:', action);
     });
   }
 

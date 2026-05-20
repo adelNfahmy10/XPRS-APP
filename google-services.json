@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "513625447323",
+    "project_id": "xprs-b0019",
+    "storage_bucket": "xprs-b0019.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:513625447323:android:7d979d25954a7415951f3e",
+        "android_client_info": {
+          "package_name": "com.myxprs"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPZYMPNzWCq0bTtvvAVZDuh3oiETQYqlY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

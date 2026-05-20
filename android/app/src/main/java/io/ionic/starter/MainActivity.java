@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package com.myxprs;
 
 import com.getcapacitor.BridgeActivity;
 

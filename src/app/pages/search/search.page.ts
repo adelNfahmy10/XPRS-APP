@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonSearchbar, IonLabel, IonList, IonItem } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonSearchbar, IonLabel, IonList, IonItem, IonButtons, IonMenuButton } from '@ionic/angular/standalone';
 import { CartService } from 'src/core/services/cart/cart-service';
 import { debounceTime, distinctUntilChanged, Subject, switchMap } from 'rxjs';
 import { CategorieService } from 'src/core/services/categories/categorie-service';
@@ -12,7 +12,7 @@ import { RouterLink } from '@angular/router';
   templateUrl: './search.page.html',
   styleUrls: ['./search.page.scss'],
   standalone: true,
-  imports: [IonItem, IonList, IonLabel, IonSearchbar, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, RouterLink]
+  imports: [IonButtons, IonItem, IonList, IonLabel, IonSearchbar, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, RouterLink, IonMenuButton]
 })
 export class SearchPage implements OnInit {
 
