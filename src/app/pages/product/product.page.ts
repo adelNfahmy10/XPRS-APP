@@ -18,7 +18,7 @@ import { FavoriteService } from 'src/core/services/favorites/favorite-service';
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ProductPage implements OnInit {
-private readonly _ProductService = inject(ProductService)
+  private readonly _ProductService = inject(ProductService)
   private readonly _ActivatedRoute = inject(ActivatedRoute)
   private readonly _ToastrService = inject(ToastrService)
   private readonly _CartService = inject(CartService)
@@ -84,7 +84,7 @@ private readonly _ProductService = inject(ProductService)
   addToCart():void{
     const data = {
       product: this.productSlug,
-      cart: Number(this.cartId()),
+      cart: this.cartId(),
       quantity: this.productData.quantity || 1,
       product_property: null,
       card: null,
@@ -99,7 +99,8 @@ private readonly _ProductService = inject(ProductService)
         this._ToastrService.success('Product added to cart successfully');
       },
       error:(err)=>{
-        this._ToastrService.warning(err.error.detail);
+        this._ToastrService.warning(err.error.detail + '- CartId : ' + this.cartId());
+
       }
     });
   }

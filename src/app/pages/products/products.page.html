@@ -11,9 +11,9 @@
   <div class="products-category">
     <ion-list>
       @for (product of productsRelated; track $index) {
-        <ion-item>
+        <ion-item [routerLink]="'/product/' + product.id">
           <ion-label>
-            <div class="row g-3 py-2" [routerLink]="'/product/' + product.id">
+            <div class="row g-3 py-2">
               <div class="col-3">
                 <div class="product-image position-relative d-flex justify-content-center align-items-center w-100 h-100 rounded">
                   <img loading="lazy" [src]="product?.picture1 || product?.picture2 || 'assets/icon/xprs_spinner.gif'" [alt]="product?.name">

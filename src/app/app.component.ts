@@ -6,6 +6,7 @@ import { addIcons } from 'ionicons';
 import { mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, heartOutline, heartSharp, archiveOutline, archiveSharp, trashOutline, trashSharp, warningOutline, warningSharp, bookmarkOutline, bookmarkSharp } from 'ionicons/icons';
 import { CartService } from 'src/core/services/cart/cart-service';
 import { FavoriteService } from 'src/core/services/favorites/favorite-service';
+import { SplashScreen } from '@capacitor/splash-screen';
 
 @Component({
   selector: 'app-root',
@@ -32,6 +33,7 @@ export class AppComponent {
     { title: 'Privecy', url: '/privacy'},
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
+
   constructor() {
     addIcons({ mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, heartOutline, heartSharp, archiveOutline, archiveSharp, trashOutline, trashSharp, warningOutline, warningSharp, bookmarkOutline, bookmarkSharp });
   }
