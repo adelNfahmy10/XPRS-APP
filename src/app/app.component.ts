@@ -7,12 +7,13 @@ import { mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, heartOutlin
 import { CartService } from 'src/core/services/cart/cart-service';
 import { FavoriteService } from 'src/core/services/favorites/favorite-service';
 import { SplashScreen } from '@capacitor/splash-screen';
+import { NgxSpinnerComponent } from "ngx-spinner";
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
-  imports: [RouterLink, RouterLinkActive, IonApp, IonSplitPane, IonMenu, IonContent, IonList, IonListHeader, IonNote, IonMenuToggle, IonItem, IonIcon, IonLabel, IonRouterLink, IonRouterOutlet],
+  imports: [RouterLink, RouterLinkActive, IonApp, IonSplitPane, IonMenu, IonContent, IonList, IonListHeader, IonNote, IonMenuToggle, IonItem, IonIcon, IonLabel, IonRouterLink, IonRouterOutlet, NgxSpinnerComponent],
 })
 export class AppComponent {
   private readonly _CartService = inject(CartService)
@@ -21,6 +22,7 @@ export class AppComponent {
   token = this._CartService.token
   cartId = this._CartService.cartId
   favCount = this._FavoriteService.favoriteItemCount;
+  cartProducts:any[] = []
 
   public appPages = [
     { title: 'Home', url: '/home', icon: 'mail' },
@@ -39,8 +41,12 @@ export class AppComponent {
   }
 
   ngOnInit(): void {
-    if(!this.cartId() && !this.token()){
-      this.addCart()
+    const id = this.cartId();
+
+    if (!id && !this.token()) {
+      this.addCart();
+    } else {
+      this.getCart();
     }
   }
 
@@ -55,7 +61,32 @@ export class AppComponent {
     })
   }
 
+  getCart(): void {
+    const id = this.cartId();
 
+    if (!id) return;
+
+    this._CartService.getCart(id).subscribe({
+      next: (res) => {
+        this.cartProducts = res.cartproduct;
+
+        // 👇 لو الكارت غير صالح أو فاضي حسب business
+        if (!res.cartproduct || res.cartproduct.length === 0) {
+          localStorage.removeItem('xprsCartId');
+          this.cartId.set(null);
+
+          this.addCart();
+          return;
+        }
+      },
+      error: () => {
+        localStorage.removeItem('xprsCartId');
+        this.cartId.set(null);
+
+        this.addCart();
+      }
+    });
+  }
 
 
 }

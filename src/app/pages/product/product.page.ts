@@ -53,17 +53,15 @@ export class ProductPage implements OnInit {
         this._ProductService.getProductDetails(this.productSlug).subscribe({
           next: (res) => {
             this.productData = res;
-            console.log(this.productData);
-
             this.getAllCart()
             this.getRelatedProducts()
 
             this.productImages = [
-              { src: this.productData.picture1, alt: this.productData.picture1_alt },
-              { src: this.productData.picture2, alt: this.productData.picture2_alt },
-              { src: this.productData.picture3, alt: this.productData.picture3_alt },
-              { src: this.productData.picture4, alt: this.productData.picture4_alt },
-              { src: this.productData.picture5, alt: this.productData.picture5_alt },
+              { src: this.productData?.picture1, alt: this.productData?.picture1_alt },
+              { src: this.productData?.picture2, alt: this.productData?.picture2_alt },
+              { src: this.productData?.picture3, alt: this.productData?.picture3_alt },
+              { src: this.productData?.picture4, alt: this.productData?.picture4_alt },
+              { src: this.productData?.picture5, alt: this.productData?.picture5_alt },
             ].filter(img => img.src);
 
             this.mainIndex = 0;
@@ -85,7 +83,7 @@ export class ProductPage implements OnInit {
     const data = {
       product: this.productSlug,
       cart: this.cartId(),
-      quantity: this.productData.quantity || 1,
+      quantity: this.productData?.quantity || 1,
       product_property: null,
       card: null,
       branded_page_product: null,
@@ -285,7 +283,7 @@ export class ProductPage implements OnInit {
           }
         );
     } else {
-      this._ProductService.getAccInstallments(this.productData.id, install, down, bank, this.interest).subscribe(
+      this._ProductService.getAccInstallments(this.productData?.id, install, down, bank, this.interest).subscribe(
           (res: any) => {
             this.downPrice = res.monthly_payment;
 
@@ -314,7 +312,7 @@ export class ProductPage implements OnInit {
   getRelatedProducts(): void {
     this._CategorieService.getProductsCategory(
       '', // search
-      [this.productData.category.id], // categories
+      [this.productData?.category.id], // categories
       [], // shop_categories
       [], // subcategories
       [], // brands
@@ -340,6 +338,8 @@ export class ProductPage implements OnInit {
 
   // للتحقق إذا العنصر موجود في المفضلة
   isFavorite(item: any): boolean {
+    if (!item || !this.allFavoriteItems) return false;
+
     return this.allFavoriteItems.some(fav => fav.id === item.id);
   }
   // إضافة / إزالة من المفضلة

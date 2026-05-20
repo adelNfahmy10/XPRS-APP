@@ -45,6 +45,8 @@ export class SpeicalsOffersSlidersComponent  implements OnInit {
   fadeItems: Set<number> = new Set();
   // للتحقق إذا العنصر موجود في المفضلة
   isFavorite(item: any): boolean {
+    if (!item || !this.allFavoriteItems) return false;
+
     return this.allFavoriteItems.some(fav => fav.id === item.id);
   }
   // إضافة / إزالة من المفضلة

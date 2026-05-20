@@ -154,3 +154,7 @@ ion-item.selected {
   border-radius: 50%;
   text-align: center;
 }
+
+::ng-deep ngx-spinner {
+  pointer-events: none !important;
+}

@@ -53,7 +53,7 @@ export class ProductsPage implements OnInit {
             1
           ).subscribe({
             next: (res) => {
-              this.productsRelated = res.results;
+              this.productsRelated = res?.results;
             }
           });
         }
@@ -75,7 +75,7 @@ export class ProductsPage implements OnInit {
             1
           ).subscribe({
             next: (res) => {
-              this.productsRelated = res.results;
+              this.productsRelated = res?.results;
 
             }
           });

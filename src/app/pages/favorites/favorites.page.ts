@@ -34,6 +34,8 @@ private readonly _ToastrService = inject(ToastrService)
   fadeItems: Set<number> = new Set();
   // للتحقق إذا العنصر موجود في المفضلة
   isFavorite(item: any): boolean {
+    if (!item || !this.allFavorites) return false;
+
     return this.allFavorites.some(fav => fav.id === item.id);
   }
   // إضافة / إزالة من المفضلة

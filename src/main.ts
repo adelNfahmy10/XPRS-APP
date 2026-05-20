@@ -12,6 +12,9 @@ import { provideToastr } from 'ngx-toastr';
 import { register } from 'swiper/element/bundle';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { headerInterceptor } from './core/interceptors/header/header-interceptor';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { importProvidersFrom } from '@angular/core';
+import { loadingInterceptor } from './core/interceptors/loading/loading-interceptor';
 // register Swiper custom elements
 register();
 
@@ -20,8 +23,9 @@ bootstrapApplication(AppComponent, {
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
     provideRouter(routes, withPreloading(PreloadAllModules)),
-    provideHttpClient(withFetch(), withInterceptors([headerInterceptor])),
+    provideHttpClient(withFetch(), withInterceptors([headerInterceptor,loadingInterceptor])),
     provideAnimations(),
     provideToastr(),
+    importProvidersFrom(NgxSpinnerModule),
   ],
 });

@@ -11,30 +11,33 @@
   <div class="products-category">
     <ion-list>
       @for (product of productsRelated; track $index) {
-        <ion-item [routerLink]="'/product/' + product.id">
-          <ion-label>
-            <div class="row g-3 py-2">
-              <div class="col-3">
-                <div class="product-image position-relative d-flex justify-content-center align-items-center w-100 h-100 rounded">
-                  <img loading="lazy" [src]="product?.picture1 || product?.picture2 || 'assets/icon/xprs_spinner.gif'" [alt]="product?.name">
-                  @if(product?.availability == 'Out Of Stock'){
-                    <div class="out-of-stock position-absolute w-100 h-100 d-flex justify-content-center align-items-center rounded">
-                      <span class="rounded-4">Sold Out</span>
-                    </div>
-                  }
+        @if(product?.id){
+          <ion-item [routerLink]="'/product/' + product?.id">
+            <ion-label>
+              <div class="row g-3 py-2">
+                <div class="col-3">
+                  <div class="product-image position-relative d-flex justify-content-center align-items-center w-100 h-100 rounded">
+                    <img loading="lazy" [src]="product?.picture1 || product?.picture2 || 'assets/icon/xprs_spinner.gif'" [alt]="product?.name">
+                    @if(product?.availability == 'Out Of Stock'){
+                      <div class="out-of-stock position-absolute w-100 h-100 d-flex justify-content-center align-items-center rounded">
+                        <span class="rounded-4">Sold Out</span>
+                      </div>
+                    }
 
+                  </div>
+                </div>
+
+                <div class="col-9">
+                  <div class="product-details d-flex flex-column justify-content-center">
+                    <h5>{{product?.name}}</h5>
+                    <span class="main-color mt-2">{{product?.price | number}} EGP</span>
+                  </div>
                 </div>
               </div>
+            </ion-label>
+          </ion-item>
+        }
 
-              <div class="col-9">
-                <div class="product-details d-flex flex-column justify-content-center">
-                  <h5>{{product?.name}}</h5>
-                  <span class="main-color mt-2">{{product?.price | number}} EGP</span>
-                </div>
-              </div>
-            </div>
-          </ion-label>
-        </ion-item>
       } @empty {
         <h3 class="text-center">No Products Found</h3>
         <div class="shop-btn text-center my-3" routerLink="/home">
