@@ -14,13 +14,13 @@ import { HomeService } from 'src/core/services/home/home-service';
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
 export class EssentialsSlidersComponent  implements OnInit {
-private readonly _HomeService = inject(HomeService)
+  private readonly _HomeService = inject(HomeService)
   private readonly _ToastrService = inject(ToastrService)
   private readonly _CartService = inject(CartService)
   private readonly _FavoriteService = inject(FavoriteService)
 
   specialEssentials:any = {}
-  allFavoriteItems:any[] = JSON.parse(localStorage.getItem('myFavProduct')!)
+  allFavoriteItems: any[] = [];
   cart:any[] = []
   cartId = this._CartService.cartId
 
@@ -46,7 +46,7 @@ private readonly _HomeService = inject(HomeService)
   // للتحقق إذا العنصر موجود في المفضلة
   isFavorite(item: any): boolean {
     if (!item || !this.allFavoriteItems) return false;
-    
+
     return this.allFavoriteItems.some(fav => fav.id === item.id);
   }
   // إضافة / إزالة من المفضلة

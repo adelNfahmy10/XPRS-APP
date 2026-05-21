@@ -56,11 +56,11 @@ h6 {
   color: var(--ion-text-color) !important;
 }
 $main-color: #81FB37;
-*{
-  transition: all .3s ease-in-out;
-}
+// *{
+//   transition: all .3s ease-in-out;
+// }
 .main-color{
-  color: $main-color;
+  color: $main-color !important;
 }
 .main-bg{
   background-color: $main-color;

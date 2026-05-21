@@ -13,6 +13,7 @@ import { RouterLink } from '@angular/router';
 import { TabsComponent } from "src/app/components/tabs/tabs.component";
 import { CartService } from 'src/core/services/cart/cart-service';
 import { CartBarComponent } from "src/app/components/cart-bar/cart-bar.component";
+import { ThemeService } from 'src/core/services/theme/theme-service';
 
 @Component({
   selector: 'app-home',
@@ -22,5 +23,12 @@ import { CartBarComponent } from "src/app/components/cart-bar/cart-bar.component
   imports: [IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonMenuButton, MainHomeSliderComponent, CategoriesSliderComponent, BrandsSlidersComponent, SpeicalsOffersSlidersComponent, EssentialsSlidersComponent, TopSellingSlidersComponent, SpecialSellingSlidersComponent, RouterLink, TabsComponent, CartBarComponent],
 })
 export class HomePage {
+  readonly _ThemeService = inject(ThemeService)
 
+  // Change Themes (Dark | Light) Mode
+  changeTheme() {
+    this._ThemeService.enableDarkMode(
+      !this._ThemeService.isDark()
+    );
+  }
 }

@@ -10,7 +10,11 @@
 <ion-content [fullscreen]="true">
   <div class="privacy p-3">
     <div class="privacy-image mb-4">
-      <img src="assets/images/delivery-image/shipping-dark.png" alt="">
+
+      <img
+        [src]="_ThemeService.isDark() ? 'assets/images/delivery-image/shipping-dark.png' : 'assets/images/delivery-image/shipping-light.png'"
+        alt="delivery"
+      >
     </div>
 
     <div class="privacy-content">

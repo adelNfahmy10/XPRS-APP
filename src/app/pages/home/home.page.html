@@ -6,7 +6,12 @@
     </ion-buttons>
 
     <ion-title class="text-center">
-      <img loading="lazy" src="assets/icon/XPRS_LOGO_balck.png" alt="xprs">
+      <img
+        loading="lazy"
+        [src]="_ThemeService.isDark() ? 'assets/images/menubar-image/logo-dark-mode.png' : 'assets/images/menubar-image/logo-light-mode.png'"
+        alt="xprs"
+        class="logo-img"
+      >
     </ion-title>
 
     <ion-buttons slot="end">
@@ -32,7 +37,7 @@
   </ion-header>
 
   <ion-content>
-    <section class="home pb-5 mb-3">
+    <section class="home pb-5 mb-5">
       <app-main-home-slider></app-main-home-slider>
 
       <div class="container-fluid">
@@ -40,11 +45,21 @@
         <app-categories-slider></app-categories-slider>
 
         <!-- Auth -->
-        <div class="auth-section rounded-4 d-flex align-items-center justify-content-evenly text-center px-4 py-2">
+        <div
+          class="auth-section rounded-4 d-flex align-items-center justify-content-evenly text-center px-4 py-2"
+          [ngStyle]="{
+            'backgrond' : _ThemeService.isDark() ? '#000' : '#fff'
+          }"
+        >
           <span class="main-color">Sign Up</span>
             <div class="position-relative">
               <div class="image-auth">
-                <img loading="lazy" class="auth-logo-img" src="assets/icon/TVCLOGO.png" alt="">
+                <img
+                  loading="lazy"
+                  [src]="_ThemeService.isDark() ? 'assets/icon/TVC-logo-dark.png' : 'assets/icon/TVC-logo-light.png'"
+                  alt="TVC"
+                  class="auth-logo-img"
+                >
               </div>
               <span>|</span>
             </div>

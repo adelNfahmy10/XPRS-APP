@@ -1,7 +1,12 @@
 <ion-content [fullscreen]="true">
   <section class="register p-3">
     <div class="register-image text-center">
-      <img src="assets/icon/XPRS_LOGO_balck.png" alt="">
+      <img
+        loading="lazy"
+        [src]="_ThemeService.isDark() ? 'assets/images/menubar-image/logo-dark-mode.png' : 'assets/images/menubar-image/logo-light-mode.png'"
+        alt="xprs"
+        class="logo-img"
+      >
     </div>
 
     <div class="register-title">

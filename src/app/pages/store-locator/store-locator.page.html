@@ -9,7 +9,7 @@
 
 <ion-content [fullscreen]="true">
   @for (store of allStores; track $index) {
-    <div class="stores pt-3 pb-3 mx-3">
+    <div class="stores pt-3 pb-3 mx-3" (click)="openLocation(store.coordinates)">
       <div class="store-image rounded">
         <img loading="lazy" class="rounded" [src]="store.picture || 'assets/icon/xprs_spinner.gif'" [alt]="store.name">
       </div>

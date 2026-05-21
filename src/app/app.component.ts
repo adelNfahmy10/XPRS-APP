@@ -11,17 +11,18 @@ import { NgxSpinnerComponent } from "ngx-spinner";
 import { Geolocation } from '@capacitor/geolocation';
 import { PushNotifications } from '@capacitor/push-notifications';
 import { ThemeService } from 'src/core/services/theme/theme-service';
+import { Capacitor } from '@capacitor/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
-  imports: [IonToggle, RouterLink, RouterLinkActive, IonApp, IonSplitPane, IonMenu, IonContent, IonList, IonMenuToggle, IonItem, IonLabel, IonRouterLink, IonRouterOutlet, NgxSpinnerComponent],
+  imports: [RouterLink, RouterLinkActive, IonApp, IonSplitPane, IonMenu, IonContent, IonList, IonMenuToggle, IonItem, IonLabel, IonRouterLink, IonRouterOutlet, NgxSpinnerComponent],
 })
 export class AppComponent {
   private readonly _CartService = inject(CartService)
   private readonly _FavoriteService = inject(FavoriteService)
-  private readonly _ThemeService = inject(ThemeService)
+  readonly _ThemeService = inject(ThemeService)
 
   token = this._CartService.token
   cartId = this._CartService.cartId
@@ -45,11 +46,12 @@ export class AppComponent {
   }
 
   ngOnInit(): void {
-    this.initPush();
+    if (Capacitor.isNativePlatform()) {
+      this.initPush();
+    }
     this._ThemeService.loadTheme();
 
     const id = this.cartId();
-
     if (!id && !this.token()) {
       this.addCart();
     } else {
@@ -57,6 +59,7 @@ export class AppComponent {
     }
   }
 
+  // Add Cart When Open App
   addCart():void{
     this._CartService.addCart().subscribe({
       next:(res)=>{
@@ -68,6 +71,7 @@ export class AppComponent {
     })
   }
 
+  // Get Cart When Open App
   getCart(): void {
     const id = this.cartId();
 
@@ -95,6 +99,7 @@ export class AppComponent {
     });
   }
 
+  // Push Notifications init
   async initPush() {
 
     // 1. Request Permission
@@ -130,13 +135,10 @@ export class AppComponent {
     });
   }
 
-  isDark = false;
-
-  changeTheme(event:any){
-    this.isDark = event.detail.checked;
-
-    this._ThemeService.enableDarkMode(this.isDark);
+  // Change Themes (Dark | Light) Mode
+  changeTheme() {
+    this._ThemeService.enableDarkMode(
+      !this._ThemeService.isDark()
+    );
   }
-
-
 }

@@ -20,7 +20,7 @@ export class SpeicalsOffersSlidersComponent  implements OnInit {
   private readonly _FavoriteService = inject(FavoriteService)
 
   specialOffers:any = {}
-  allFavoriteItems:any[] = JSON.parse(localStorage.getItem('myFavProduct')!)
+  allFavoriteItems: any[] = [];
   cart:any[] = []
   cartId = this._CartService.cartId
 

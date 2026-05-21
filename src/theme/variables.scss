@@ -2,7 +2,7 @@
 // https://ionicframework.com/docs/theming/
 /* الوضع العادي Light Mode */
 :root {
-  --ion-background-color: #fff;
+  --ion-background-color: #ffffff;
   --ion-text-color: #222;
 
   --ion-card-background: #ffffff;
@@ -27,4 +27,7 @@ body.dark {
   --ion-color-primary: #818cf8;
   --ion-color-primary-rgb: 129,140,248;
 
+  .price{
+    color: #81FB37;
+  }
 }

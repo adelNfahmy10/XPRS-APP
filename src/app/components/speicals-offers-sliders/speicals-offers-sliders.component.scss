@@ -21,9 +21,6 @@ swiper-slide {
     height: 100%;
     object-fit: cover;
   }
-}
-
-swiper-slide {
   .offer-silde{
     text-align: start;
     box-shadow: 0 0 5px #ccc;
@@ -54,20 +51,6 @@ swiper-slide {
       font-size: 16px;
       font-weight: 600;
     }
-  }
-}
-
-.auth-section{
-  background-color: #22222281;
-  & > span{
-    font-size: 14px;
-  }
-  .image-auth{
-    position: absolute;
-    top: -40px;
-    left: -38px;
-    width: 80px;
-    z-index: 9999;
   }
 }
 

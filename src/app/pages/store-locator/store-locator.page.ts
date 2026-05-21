@@ -27,4 +27,12 @@ export class StoreLocatorPage implements OnInit {
       }
     })
   }
+
+  openLocation(coordinates: string) {
+    const [lat, lng] = coordinates.split(',');
+
+    const url = `https://www.google.com/maps?q=${lat},${lng}`;
+
+    window.open(url, '_blank');
+  }
 }

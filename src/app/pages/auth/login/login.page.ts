@@ -7,6 +7,7 @@ import { CartService } from 'src/core/services/cart/cart-service';
 import { CheckoutService } from 'src/core/services/checkout/checkout-service';
 import { ToastrService } from 'ngx-toastr';
 import { Router, RouterLink } from '@angular/router';
+import { ThemeService } from 'src/core/services/theme/theme-service';
 
 @Component({
   selector: 'app-login',
@@ -21,6 +22,7 @@ export class LoginPage {
   private readonly _CartService = inject(CartService)
   private readonly _CheckoutService = inject(CheckoutService)
   private readonly _ToastrService = inject(ToastrService)
+  readonly _ThemeService = inject(ThemeService)
   private readonly _Router = inject(Router)
 
   token = this._CartService.token
@@ -74,6 +76,13 @@ export class LoginPage {
         }
       })
     }
+  }
+
+  // Change Themes (Dark | Light) Mode
+  changeTheme() {
+    this._ThemeService.enableDarkMode(
+      !this._ThemeService.isDark()
+    );
   }
 
 }

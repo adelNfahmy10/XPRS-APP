@@ -3,7 +3,7 @@
       <!-- Background -->
       <div class="bg-tabs">
         <img
-          src="assets/images/tabs/tabs-background-black.png"
+          [src]="_ThemeService.isDark() ? 'assets/images/tabs/tabs-background-black.png' : 'assets/images/tabs/tabs-background-white.png'"
           alt="XPRS Logo"
           class="rounded-top-4"
         >
@@ -24,8 +24,14 @@
 
         <!-- Center Button -->
         <li class="tab-item center-tab" routerLink="/search">
-          <div class="center-icon">
-            <img src="assets/images/tabs/brands_active_dark.svg" alt="xprs">
+          <div class="center-icon" [ngStyle]="{
+            'background' : _ThemeService.isDark() ? '#000' : '#F8F8F8'
+          }">
+            <img
+              [src]="_ThemeService.isDark() ? 'assets/images/tabs/brands_active_dark.svg' : 'assets/images/tabs/brands_active_light.svg'"
+              alt="XPRS Logo"
+              class="rounded-top-4"
+            >
           </div>
         </li>
 

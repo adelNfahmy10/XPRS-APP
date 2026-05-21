@@ -21,7 +21,7 @@ private readonly _HomeService = inject(HomeService)
 
 
   specialSelling:any = {}
-  allFavoriteItems:any[] = JSON.parse(localStorage.getItem('myFavProduct')!)
+  allFavoriteItems: any[] = [];
   cart:any[] = []
   cartId = this._CartService.cartId
 

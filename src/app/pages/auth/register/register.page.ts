@@ -5,6 +5,7 @@ import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/stan
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from 'src/core/services/auth/auth-service';
 import { ToastrService } from 'ngx-toastr';
+import { ThemeService } from 'src/core/services/theme/theme-service';
 
 @Component({
   selector: 'app-register',
@@ -17,6 +18,7 @@ export class RegisterPage {
 private readonly _FormBuilder = inject(FormBuilder)
   private readonly _AuthService = inject(AuthService)
   private readonly _ToastrService = inject(ToastrService)
+    readonly _ThemeService = inject(ThemeService)
   private readonly _Router = inject(Router)
 
   registerForm:FormGroup = this._FormBuilder.group({
@@ -49,4 +51,12 @@ private readonly _FormBuilder = inject(FormBuilder)
       }
     });
   }
+
+  // Change Themes (Dark | Light) Mode
+  changeTheme() {
+    this._ThemeService.enableDarkMode(
+      !this._ThemeService.isDark()
+    );
+  }
+
 }

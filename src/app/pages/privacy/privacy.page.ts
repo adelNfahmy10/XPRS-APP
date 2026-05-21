@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton } from '@ionic/angular/standalone';
 import { DeliveryService } from 'src/core/services/delivery/delivery-service';
+import { ThemeService } from 'src/core/services/theme/theme-service';
 
 @Component({
   selector: 'app-privacy',
@@ -13,7 +14,7 @@ import { DeliveryService } from 'src/core/services/delivery/delivery-service';
 })
 export class PrivacyPage implements OnInit {
   private readonly _DeliveryService = inject(DeliveryService)
-  constructor() { }
+  readonly _ThemeService = inject(ThemeService)
 
   deliveryContent:any[] = []
 
@@ -27,5 +28,12 @@ export class PrivacyPage implements OnInit {
         this.deliveryContent = res
       }
     })
+  }
+
+  // Change Themes (Dark | Light) Mode
+  changeTheme() {
+    this._ThemeService.enableDarkMode(
+      !this._ThemeService.isDark()
+    );
   }
 }
