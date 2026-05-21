@@ -3,22 +3,22 @@
 
   <swiper-container slides-per-view="2" space-between="10" class="swiper-wrapper">
     @for (item of specialOffers?.products; track $index) {
-      <swiper-slide class="rounded-4 h-100" >
-        <div class="card offer-silde bg-transparent">
+      <swiper-slide class="rounded-4 h-100">
+        <div class="offer-silde rounded-4">
 
           <div class="card-image position-relative">
-            <img loading="lazy" [src]="item?.picture1 || 'assets/icon/xprs_spinner.gif'" [alt]="item?.picture1_alt" class="offer-img rounded-0 cr" [routerLink]="'/product/' + item.id"/>
+            <img loading="lazy"[src]="item?.picture1 || 'assets/icon/xprs_spinner.gif'" [alt]="item?.picture1_alt" class="offer-img rounded-0 cr" [routerLink]="'/product/' + item.id"/>
 
             <span class="icon-option position-absolute d-flex flex-column gap-1 top-0 start-0 p-1">
-              <i
-                (click)="addToFavorite(item)"
-                class="ms-1"
-                [ngClass]="
-                  isFavorite(item)
-                    ? 'fa-solid fa-heart main-color'
-                    : 'fa-regular fa-heart main-color'
-                "
-              ></i>
+                <i
+                  (click)="addToFavorite(item)"
+                  class="ms-1"
+                  [ngClass]="
+                    isFavorite(item)
+                      ? 'fa-solid fa-heart main-color'
+                      : 'fa-regular fa-heart main-color'
+                  "
+                ></i>
             </span>
 
             <span class="stock-msg position-absolute top-0 end-0 p-1">
@@ -38,15 +38,15 @@
             </span>
           </div>
 
-          <div class="card-body px-1 pb-0" [routerLink]="'/product/' + item.id">
+          <div class="p-2" [routerLink]="'/product/' + item.id">
             <h6 class="m-0 product-title">{{ item.name.slice(0,30) }}...</h6>
           </div>
 
-          <div class="card-footer d-flex justify-content-between align-items-center px-1" >
+          <div class="d-flex justify-content-between align-items-center p-2 pt-0" >
             <p class="m-0 p-0 main-color price">
               {{ item.price | number }} EGP
             </p>
-            <!-- @if (item?.availability == 'In Stock') {
+            @if (item?.availability == 'In Stock') {
               <ion-button
                 fill="clear"
                 (click)="addToCart(item)"
@@ -60,7 +60,7 @@
                   }"
                 ></i>
               </ion-button>
-            } -->
+            }
           </div>
         </div>
       </swiper-slide>

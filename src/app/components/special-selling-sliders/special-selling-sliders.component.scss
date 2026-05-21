@@ -24,29 +24,14 @@ swiper-slide {
 }
 
 swiper-slide {
-  &.category-slide{
-    flex-direction: column;
-    .cat-slide{
-      border: 2px solid $main-color;
-    }
-    .slide-title{
-      font-size: 14px;
-    }
-  }
-
-  &.brand-slide{
-    img{
-      filter: drop-shadow(0 0 10px $main-color);
-    }
-  }
-
-  & .offer-silde{
-    color: #fff;
+  .offer-silde{
     text-align: start;
+    box-shadow: 0 0 5px #ccc;
+    margin: 10px 2px;
     .card-image{
-      padding: 10px;
       border-radius: 10px;
       border: 2px solid $main-color;
+      overflow: hidden;
     }
     .stock-msg{
       font-size: 12px;
@@ -63,13 +48,13 @@ swiper-slide {
     }
     .product-title{
       font-size: 14px;
+      font-weight: 600;
     }
     .price{
       font-size: 16px;
-      font-weight: bold;
+      font-weight: 600;
     }
   }
-
 }
 
 .auth-section{
@@ -86,42 +71,35 @@ swiper-slide {
   }
 }
 
-.card-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  p {
-    flex: 1;
-    margin: 0;
-  }
-
-  .btn-add {
-    --padding-start: 0;
-    --padding-end: 0;
-    --padding-top: 0;
-    --padding-bottom: 0;
-    --box-shadow: none;
-    min-height: auto;
-    margin: 0;
-
-    i {
-      width: 40px;
-      height: 40px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border: 1px solid $main-color;
-      border-radius: 10px;
-      font-size: 18px;
-    }
-
-    .fa-cart-shopping {
-      border: none;
-    }
-  }
+p {
+  flex: 1;
+  margin: 0;
 }
 
+.btn-add {
+  --padding-start: 0;
+  --padding-end: 0;
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --box-shadow: none;
+  min-height: auto;
+  margin: 0;
+
+  i {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid $main-color;
+    border-radius: 10px;
+    font-size: 18px;
+  }
+
+  .fa-cart-shopping {
+    border: none;
+  }
+}
 
 .fade-fave {
   position: absolute;

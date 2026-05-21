@@ -1,7 +1,6 @@
-
 import { Component, effect, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { IonApp, IonSplitPane, IonMenu, IonContent, IonList, IonListHeader, IonNote, IonMenuToggle, IonItem, IonIcon, IonLabel, IonRouterOutlet, IonRouterLink } from '@ionic/angular/standalone';
+import { IonApp, IonSplitPane, IonMenu, IonContent, IonList, IonListHeader, IonNote, IonMenuToggle, IonItem, IonIcon, IonLabel, IonRouterOutlet, IonRouterLink, IonToggle } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, heartOutline, heartSharp, archiveOutline, archiveSharp, trashOutline, trashSharp, warningOutline, warningSharp, bookmarkOutline, bookmarkSharp } from 'ionicons/icons';
 import { CartService } from 'src/core/services/cart/cart-service';
@@ -11,16 +10,18 @@ import { NgxSpinnerComponent } from "ngx-spinner";
 // Permisions
 import { Geolocation } from '@capacitor/geolocation';
 import { PushNotifications } from '@capacitor/push-notifications';
+import { ThemeService } from 'src/core/services/theme/theme-service';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
-  imports: [RouterLink, RouterLinkActive, IonApp, IonSplitPane, IonMenu, IonContent, IonList, IonListHeader, IonNote, IonMenuToggle, IonItem, IonIcon, IonLabel, IonRouterLink, IonRouterOutlet, NgxSpinnerComponent],
+  imports: [IonToggle, RouterLink, RouterLinkActive, IonApp, IonSplitPane, IonMenu, IonContent, IonList, IonMenuToggle, IonItem, IonLabel, IonRouterLink, IonRouterOutlet, NgxSpinnerComponent],
 })
 export class AppComponent {
   private readonly _CartService = inject(CartService)
   private readonly _FavoriteService = inject(FavoriteService)
+  private readonly _ThemeService = inject(ThemeService)
 
   token = this._CartService.token
   cartId = this._CartService.cartId
@@ -45,6 +46,7 @@ export class AppComponent {
 
   ngOnInit(): void {
     this.initPush();
+    this._ThemeService.loadTheme();
 
     const id = this.cartId();
 
@@ -126,6 +128,14 @@ export class AppComponent {
     PushNotifications.addListener('pushNotificationActionPerformed', (action) => {
       console.log('Notification clicked:', action);
     });
+  }
+
+  isDark = false;
+
+  changeTheme(event:any){
+    this.isDark = event.detail.checked;
+
+    this._ThemeService.enableDarkMode(this.isDark);
   }
 
 

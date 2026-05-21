@@ -1,0 +1,42 @@
+<!-- <ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content [fullscreen]="true">
+  <section class="login p-3">
+    <div class="login-image text-center">
+      <img src="assets/icon/XPRS_LOGO_balck.png" alt="">
+    </div>
+
+    <div class="login-title text-center">
+      <h2>Welcome  back!</h2>
+      <p>Log in to continue</p>
+    </div>
+
+    <div class="login-form">
+      <form class="d-flex flex-column gap-3" [formGroup]="loginForm" (ngSubmit)="submitLogin()">
+        <div>
+          <label class="form-label" for="email">Email</label>
+          <input class="form-control bg-transparent text-white" type="email" name="email" id="email" formControlName="username">
+        </div>
+
+        <div>
+          <label class="form-label" for="password">Password</label>
+          <input class="form-control bg-transparent text-white" type="password" name="password" id="password" formControlName="password">
+        </div>
+
+        <div>
+          <button class="btn main-bg w-100 rounded-5 text-white" [disabled]="loginForm.invalid">Log In</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="login-footer text-center mt-3">
+      <p class="m-0">Don't have an account? <span class="main-color" routerLink="/register">Sign Up</span></p>
+      <p class="m-0">Contiune as a <span class="main-color" routerLink="/home">Guest</span></p>
+    </div>
+
+  </section>
+</ion-content>

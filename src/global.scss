@@ -36,7 +36,25 @@
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
 
+html, body{
+  background-color: #000 !important;
+}
 
+body,
+ion-content,
+ion-item,
+ion-label,
+p,
+span,
+div,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--ion-text-color) !important;
+}
 $main-color: #81FB37;
 *{
   transition: all .3s ease-in-out;
@@ -49,5 +67,9 @@ $main-color: #81FB37;
 }
 .main-border{
   border: 1px solid $main-color;
+}
+
+.price{
+  color: $main-color !important;
 }
 

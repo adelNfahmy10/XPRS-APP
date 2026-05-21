@@ -42,7 +42,7 @@
       <div class="products-category">
         <ion-list>
           @for (product of searchResults; track $index) {
-            <ion-item>
+            <ion-item [routerLink]="'/product/' + product.id">
               <ion-label>
                 <div class="row g-3 py-2">
                   <div class="col-3">

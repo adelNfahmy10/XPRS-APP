@@ -1,0 +1,55 @@
+<ion-content [fullscreen]="true">
+  <section class="register p-3">
+    <div class="register-image text-center">
+      <img src="assets/icon/XPRS_LOGO_balck.png" alt="">
+    </div>
+
+    <div class="register-title">
+      <h2 class="mt-0">Create an account</h2>
+    </div>
+
+    <div class="register-form">
+      <form class="d-flex flex-column gap-3" [formGroup]="registerForm" (ngSubmit)="submitRegister()">
+        <div>
+          <label class="form-label" for="firstName">First Name</label>
+          <input class="form-control bg-transparent text-white" type="text" name="firstName" id="firstName" formControlName="firstname">
+        </div>
+
+        <div>
+          <label class="form-label" for="lastName">Last Name</label>
+          <input class="form-control bg-transparent text-white" type="text" name="lastName" id="lastName" formControlName="lastname">
+        </div>
+
+        <div>
+          <label class="form-label" for="email">Email</label>
+          <input class="form-control bg-transparent text-white" type="email" name="email" id="email" formControlName="email">
+        </div>
+
+        <div>
+          <label class="form-label" for="phone">Mobile Number</label>
+          <input class="form-control bg-transparent text-white" type="tel" name="phone" id="phone" formControlName="phone">
+        </div>
+
+        <div>
+          <label class="form-label" for="password">Password</label>
+          <input class="form-control bg-transparent text-white" type="text" name="password" id="password" formControlName="password">
+        </div>
+
+        <div>
+          <label class="form-label" for="repassword">Re-Enter Password</label>
+          <input class="form-control bg-transparent text-white" type="text" name="repassword" id="repassword" formControlName="repassword">
+        </div>
+
+        <div>
+          <button class="btn main-bg w-100 rounded-5 text-white" [disabled]="registerForm.invalid">Create Account</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="register-footer text-center mt-3">
+      <p class="m-0">Don't have an account? <span class="main-color" routerLink="/login">Log in</span></p>
+      <p class="m-0">Contiune as a <span class="main-color" routerLink="/home">Guest</span></p>
+    </div>
+
+  </section>
+</ion-content>

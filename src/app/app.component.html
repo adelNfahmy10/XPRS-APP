@@ -36,6 +36,11 @@
               </ion-item>
             </ion-menu-toggle>
           }
+
+          <ion-toggle
+            [checked]="isDark"
+            (ionChange)="changeTheme($event)">
+          </ion-toggle>
         </ion-list>
 
         <!-- <ion-list id="labels-list">

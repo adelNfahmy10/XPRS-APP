@@ -1,0 +1,20 @@
+$main-color: #81FB37;
+
+.auth-card{
+  .img-user{
+    img{
+      width: 80px;
+    }
+  }
+
+  .msg-user{
+    p{
+      font-size: 12px;
+      color: #bbbbbb;
+    }
+
+    button:focus, button:hover{
+      background-color: $main-color;
+    }
+  }
+}

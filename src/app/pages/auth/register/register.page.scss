@@ -1,0 +1,13 @@
+$main-color: #81FB37;
+
+h2{
+  font-size: 28px;
+  font-weight: 700;
+}
+p, label{
+  color: #bbbbbb;
+}
+
+button:hover{
+  background-color: $main-color;
+}
