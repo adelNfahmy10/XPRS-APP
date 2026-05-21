@@ -6,6 +6,7 @@ import { CartService } from 'src/core/services/cart/cart-service';
 import { switchMap } from 'rxjs';
 import { CheckoutService } from 'src/core/services/checkout/checkout-service';
 import { RouterLink } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-cart',
@@ -17,6 +18,7 @@ import { RouterLink } from '@angular/router';
 export class CartPage implements OnInit {
   private readonly _CartService = inject(CartService)
   private readonly _CheckoutService = inject(CheckoutService)
+  private readonly _ToastrService = inject(ToastrService)
 
   cartCount = this._CartService.cartCount;
   cartProducts = this._CartService.cartProducts;
@@ -53,6 +55,7 @@ export class CartPage implements OnInit {
   deleteProductInCart(productId:any):void{
     this._CartService.deleteCart(productId).subscribe({
       next:(res)=>{
+        this._ToastrService.warning('Product removed from cart successfully');
         this.getAllCart()
       }
     })

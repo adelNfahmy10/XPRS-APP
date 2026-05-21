@@ -52,6 +52,13 @@ input[type=number]::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+.swipe-msg{
+  color: #f00 !important;
+  span{
+    color: #f00 !important;
+  }
+  font-size: 12px;
+}
 .btn-submit{
   background-color: $main-color;
   color: #fff;

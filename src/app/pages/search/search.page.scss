@@ -27,3 +27,33 @@ $main-color: #81FB37;
   }
 }
 
+.custom-searchbar {
+  --border-radius: 10px;
+  --box-shadow: 0 0 5px #ccc;
+}
+
+/* LIGHT MODE (default) */
+.custom-searchbar {
+  --placeholder-color: #777;
+  --icon-color: #555;
+  --clear-button-color: #555;
+}
+
+/* DARK MODE */
+body.dark .custom-searchbar {
+  --placeholder-color: #aaa;
+  --icon-color: #aaa;
+  --clear-button-color: #aaa;
+}
+
+/* container */
+.search-inputs {
+  padding: 5px;
+}
+
+/* Close button */
+.close-btn {
+  cursor: pointer;
+  font-size: 14px;
+  opacity: 0.8;
+}

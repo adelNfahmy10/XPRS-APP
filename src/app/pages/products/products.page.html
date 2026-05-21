@@ -15,7 +15,7 @@
           <ion-item [routerLink]="'/product/' + product?.id">
             <ion-label>
               <div class="row g-3 py-2">
-                <div class="col-3">
+                <div class="col-4">
                   <div class="product-image position-relative d-flex justify-content-center align-items-center w-100 h-100 rounded">
                     <img loading="lazy" [src]="product?.picture1 || product?.picture2 || 'assets/icon/xprs_spinner.gif'" [alt]="product?.name">
                     @if(product?.availability == 'Out Of Stock'){
@@ -27,7 +27,7 @@
                   </div>
                 </div>
 
-                <div class="col-9">
+                <div class="col-8">
                   <div class="product-details d-flex flex-column justify-content-center">
                     <h5>{{product?.name}}</h5>
                     <span class="main-color mt-2">{{product?.price | number}} EGP</span>
