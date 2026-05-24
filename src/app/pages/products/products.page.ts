@@ -1,19 +1,20 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonItem, IonLabel, IonButtons, IonBackButton } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonItem, IonLabel, IonButtons, IonBackButton, IonRefresher, IonRefresherContent } from '@ionic/angular/standalone';
 import { CategorieService } from 'src/core/services/categories/categorie-service';
 import { CartService } from 'src/core/services/cart/cart-service';
 import { ProductService } from 'src/core/services/products/product-service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { RefreshComponent } from "src/app/components/refresh/refresh.component";
 
 @Component({
   selector: 'app-products',
   templateUrl: './products.page.html',
   styleUrls: ['./products.page.scss'],
   standalone: true,
-  imports: [IonBackButton, IonButtons, IonLabel, IonItem, IonList, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, RouterLink]
+  imports: [IonRefresherContent, IonRefresher, IonBackButton, IonButtons, IonLabel, IonItem, IonList, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, RouterLink, RefreshComponent]
 })
 export class ProductsPage implements OnInit {
   private readonly _CategorieService = inject(CategorieService)
@@ -26,6 +27,68 @@ export class ProductsPage implements OnInit {
   ngOnInit() {
     this.getRelatedProducts()
   }
+
+  handleRefresh(event: any) {
+    this._ActivatedRoute.paramMap.subscribe({
+      next: (param) => {
+        const type = param.get('type');
+        const value = param.get('value');
+        if (!type || !value) return;
+
+        // ===== Category =====
+        if (type === 'category') {
+
+          this._CategorieService.getProductsCategory(
+            '',
+            [value],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            'stock',
+            20,
+            1
+          ).subscribe({
+            next: (res) => {
+              this.productsRelated = res?.results;
+            }
+          });
+        }
+
+        // ===== Brand =====
+        if (type === 'brand') {
+          this._CategorieService.getProductsCategory(
+            '',
+            [],
+            [],
+            [],
+            [value],
+            [],
+            [],
+            [],
+            [],
+            'stock',
+            20,
+            1
+          ).subscribe({
+            next: (res) => {
+              this.productsRelated = res?.results;
+
+            }
+          });
+        }
+
+        event.target.complete();
+      },
+      error: () => {
+        event.target.complete();
+      }
+    });
+  }
+
 
   // get related products
   getRelatedProducts(): void {

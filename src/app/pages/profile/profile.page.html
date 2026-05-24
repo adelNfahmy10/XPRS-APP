@@ -18,6 +18,13 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+    <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-down"
+      refreshingSpinner="circles">
+    </ion-refresher-content>
+  </ion-refresher>
+
   <section class="profile p-3 rounded-3">
     @if(!token()){
       <div class="auth-card p-3 border text-center rounded-4">
@@ -93,6 +100,5 @@
         </div>
       </div>
     }
-
   </section>
 </ion-content>

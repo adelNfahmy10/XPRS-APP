@@ -290,18 +290,17 @@
 
     <!-- Add To Cart Btn -->
     <div class="add-to-cart mt-1">
-      @if(!isCheckProduct){
-        @if(productData?.availability == 'In Stock'){
-          <button class="btn main-bg btn-add w-100" (click)="addToCart()">
-            {{productData?.is_preorder == true ? 'Pre Order' : 'Add to Cart'}}
-          </button>
-        }
-      } @else if(isCheckProduct) {
-        @if(productData?.availability == 'In Stock'){
-          <button class="btn w-100 mt-3 disabled" disabled >
-            {{productData?.is_preorder == true ? 'Pre Order' : 'Already in Cart'}}
-          </button>
-        }
+      @if(productData?.availability == 'In Stock'){
+        <button
+          class="btn main-bg btn-add w-100"
+          (click)="addToCart()"
+          [disabled]="isInCart()"
+        >
+          {{ isInCart()
+              ? 'Already in Cart'
+              : (productData?.is_preorder ? 'Pre Order' : 'Add to Cart')
+          }}
+        </button>
       }
 
       <!-- Notify Me Section -->

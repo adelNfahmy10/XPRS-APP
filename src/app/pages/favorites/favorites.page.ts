@@ -1,77 +1,125 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonButton } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonButton, IonRefresher, IonRefresherContent } from '@ionic/angular/standalone';
 import { ToastrService } from 'ngx-toastr';
 import { CartService } from 'src/core/services/cart/cart-service';
 import { RouterLink } from '@angular/router';
 import { FavoriteService } from 'src/core/services/favorites/favorite-service';
+import { RefreshComponent } from "src/app/components/refresh/refresh.component";
 
 @Component({
   selector: 'app-favorites',
   templateUrl: './favorites.page.html',
   styleUrls: ['./favorites.page.scss'],
   standalone: true,
-  imports: [IonButton, IonBackButton, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, RouterLink]
+  imports: [IonRefresherContent, IonRefresher, IonButton, IonBackButton, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, RouterLink, RefreshComponent]
 })
 export class FavoritesPage implements OnInit {
 private readonly _ToastrService = inject(ToastrService)
   private readonly _CartService = inject(CartService)
   private readonly _FavoriteService = inject(FavoriteService)
 
-  allFavorites: any[] = JSON.parse(localStorage.getItem('myFavProduct')!)
-  cart:any[] = []
+  fadeItems: Set<number> = new Set();
+  favoritesItemes = this._FavoriteService.favoriteItems;
+
   cartId = this._CartService.cartId
 
   ngOnInit(): void {
     this.getAllCart()
-    const storedFav = localStorage.getItem('myFavProduct');
-    if (storedFav) {
-      this.allFavorites = JSON.parse(storedFav);
+  }
+
+  handleRefresh(event: any) {
+    if (this.cartId()) {
+      this._CartService.getCart(this.cartId()).subscribe({
+        next: (res) => {
+
+          const products = res?.cartproduct || [];
+
+          this._CartService.cartProducts.set(products);
+
+          this._CartService.cartCount.set(
+            products.length
+          );
+
+          event.target.complete();
+        },
+        error: () => {
+          event.target.complete();
+        }
+      })
     }
+
+    this.favoritesItemes = this._FavoriteService.favoriteItems;
   }
-  // حفظ العناصر اللي عليها animation
-  fadeItems: Set<number> = new Set();
+
   // للتحقق إذا العنصر موجود في المفضلة
-  isFavorite(item: any): boolean {
-    if (!item || !this.allFavorites) return false;
-
-    return this.allFavorites.some(fav => fav.id === item.id);
+  isFavorite(item:any): boolean {
+    return this._FavoriteService.isFavorite(item);
   }
-  // إضافة / إزالة من المفضلة
-  addToFavorite(item: any): void {
-    const index = this.allFavorites.findIndex(fav => fav.id === item.id);
 
-    if (index === -1) {
-      // لو مش موجود أضفه
-      this.allFavorites.push(item);
-      this._ToastrService.success('Product added to favorites successfully');
-      // تشغيل animation
+  // إضافة / إزالة من المفضلة
+  addToFavorite(item:any): void {
+
+    const added =
+    this._FavoriteService.toggle(item);
+
+    if(added){
+
+      this._ToastrService.success(
+        'Product added to favorites successfully'
+      );
+
       this.fadeItems.add(item.id);
-      setTimeout(() => this.fadeItems.delete(item.id), 1000); // مدة الfade CSS
+
+      setTimeout(() => {
+        this.fadeItems.delete(item.id);
+      },1000);
 
     } else {
-      // لو موجود، ممكن نعمل toggle ونحذفه (اختياري)
-      this.allFavorites.splice(index, 1);
-      this._ToastrService.warning('Product removed from favorites successfully');
-    }
 
-    // تحديث localStorage
-    localStorage.setItem('myFavProduct', JSON.stringify(this.allFavorites));
-    this._FavoriteService.sync(this.allFavorites.length);
+      this._ToastrService.warning(
+        'Product removed from favorites successfully'
+      );
+    }
   }
+
   showFadeAnimation(item: any): boolean {
     return this.fadeItems.has(item.id);
   }
 
-  isCart(item: any): boolean {
-    return this.cart.some(
+  isCart(item:any): boolean {
+    return this._CartService.cartProducts().some(
       cartItem => cartItem.product?.id === item.id
     );
   }
 
+  getCartItem(item:any) {
+    return this._CartService.cartProducts().find(
+      cartItem => cartItem.product?.id === item.id
+    );
+  }
+
+  getAllCart(): void {
+    if (this.cartId()) {
+      this._CartService.getCart(this.cartId()).subscribe({
+        next: (res) => {
+
+          const products = res?.cartproduct || [];
+
+          this._CartService.cartProducts.set(products);
+
+          this._CartService.cartCount.set(
+            products.length
+          );
+        }
+      })
+    }
+  }
+
   addToCart(item:any):void{
     const cartItem = this.getCartItem(item);
+
     // 🟥 لو موجود → احذف
     if (cartItem) {
       this._CartService.deleteCart(cartItem.id).subscribe({
@@ -99,23 +147,5 @@ private readonly _ToastrService = inject(ToastrService)
         this._ToastrService.success('Product added to cart successfully');
       }
     });
-  }
-
-  getCartItem(item: any) {
-    return this.cart.find(
-      cartItem => cartItem.product?.id === item.id
-    );
-  }
-
-  getAllCart():void{
-    if(this.cartId()){
-      this._CartService.getCart(this.cartId()).subscribe({
-        next:(res)=>{
-          this.cart = res?.cartproduct || [];
-          this._CartService.cartCount.set(res.cartproduct.length)
-          this._CartService.cartProducts.set(res.cartproduct)
-        }
-      })
-    }
   }
 }

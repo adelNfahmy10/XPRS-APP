@@ -1,59 +1,50 @@
-$main-color: #81FB37;
-
-.product-details{
-  h5{
-    font-size: 14px;
-  }
-  span{
-    font-size: 12px;
-    font-weight: 600;
-  }
+.custom-searchbar{
+  --border-radius:20px;
+  --background: var(--ion-item-background);
+  --color: var(--ion-text-color);
+  --placeholder-color: gray;
 }
+
+.product-item{
+  border-radius:16px;
+  transition:.3s;
+}
+
+.product-item:active{
+  transform:scale(.98);
+}
+
 .product-image{
-  border: 2px solid $main-color;
-  img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  .out-of-stock{
-    position: absolute;
-    background-color: #c6c6c64e;
-    span{
-      background-color: #2222224e;
-      font-size: 10px;
-      padding: 2px 5px;
-    }
-  }
+  width:100%;
+  height:100px;
+  border-radius:12px;
+  overflow:hidden;
+  position:relative;
+  background:#f4f4f4;
 }
 
-.custom-searchbar {
-  --border-radius: 10px;
-  --box-shadow: 0 0 5px #ccc;
+.product-image img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
 }
 
-/* LIGHT MODE (default) */
-.custom-searchbar {
-  --placeholder-color: #777;
-  --icon-color: #555;
-  --clear-button-color: #555;
+.out-of-stock{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.5);
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
-/* DARK MODE */
-body.dark .custom-searchbar {
-  --placeholder-color: #aaa;
-  --icon-color: #aaa;
-  --clear-button-color: #aaa;
+.out-of-stock span{
+  background:white;
+  color:red;
+  padding:6px 14px;
+  border-radius:20px;
 }
 
-/* container */
-.search-inputs {
-  padding: 5px;
-}
-
-/* Close button */
-.close-btn {
-  cursor: pointer;
-  font-size: 14px;
-  opacity: 0.8;
+.empty-state{
+  opacity:.7;
 }

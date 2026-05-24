@@ -1,18 +1,19 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonRefresher, IonRefresherContent } from '@ionic/angular/standalone';
 import { CartService } from 'src/core/services/cart/cart-service';
 import { CheckoutService } from 'src/core/services/checkout/checkout-service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { RefreshComponent } from "src/app/components/refresh/refresh.component";
 
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.page.html',
   styleUrls: ['./checkout.page.scss'],
   standalone: true,
-  imports: [IonBackButton, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, ReactiveFormsModule]
+  imports: [IonRefresherContent, IonRefresher, IonBackButton, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, ReactiveFormsModule, RefreshComponent]
 })
 export class CheckoutPage implements OnInit {
 private readonly _CartService = inject(CartService)
@@ -60,6 +61,24 @@ private readonly _CartService = inject(CartService)
   ngOnInit(): void {
     this.getAllCart()
     this.hiddingPaymentMethod()
+  }
+
+  handleRefresh(event: any) {
+    this.checkoutForm.reset();
+
+    if(this.cartId()){
+      this._CartService.getCart(this.cartId()).subscribe({
+        next:(res)=>{
+          this._CartService.cartCount.set(res.cartproduct.length);
+          this._CartService.cartProducts.set(res.cartproduct);
+          this._CartService.subTotal.set(res.total);
+          event.target.complete();
+        },
+        error: () => {
+          event.target.complete();
+        }
+      })
+    }
   }
 
   getAllCart():void{

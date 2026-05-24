@@ -20,17 +20,13 @@ export class EssentialsSlidersComponent  implements OnInit {
   private readonly _FavoriteService = inject(FavoriteService)
 
   specialEssentials:any = {}
-  allFavoriteItems: any[] = [];
-  cart:any[] = []
+  fadeItems: Set<number> = new Set();
+
   cartId = this._CartService.cartId
 
   ngOnInit(): void {
     this.getHomeData()
     this.getAllCart()
-    const storedFav = localStorage.getItem('myFavProduct');
-    if (storedFav) {
-      this.allFavoriteItems = JSON.parse(storedFav);
-    }
   }
 
   getHomeData():void{
@@ -41,44 +37,68 @@ export class EssentialsSlidersComponent  implements OnInit {
     })
   }
 
-  // حفظ العناصر اللي عليها animation
-  fadeItems: Set<number> = new Set();
   // للتحقق إذا العنصر موجود في المفضلة
-  isFavorite(item: any): boolean {
-    if (!item || !this.allFavoriteItems) return false;
-
-    return this.allFavoriteItems.some(fav => fav.id === item.id);
+  isFavorite(item:any): boolean {
+    return this._FavoriteService.isFavorite(item);
   }
-  // إضافة / إزالة من المفضلة
-  addToFavorite(item: any): void {
-    const index = this.allFavoriteItems.findIndex(fav => fav.id === item.id);
 
-    if (index === -1) {
-      // لو مش موجود أضفه
-      this.allFavoriteItems.push(item);
-      this._ToastrService.success('Product added to favorites successfully');
-      // تشغيل animation
+  // إضافة / إزالة من المفضلة
+  addToFavorite(item:any): void {
+
+    const added =
+    this._FavoriteService.toggle(item);
+
+    if(added){
+
+      this._ToastrService.success(
+        'Product added to favorites successfully'
+      );
+
       this.fadeItems.add(item.id);
-      setTimeout(() => this.fadeItems.delete(item.id), 1000); // مدة الfade CSS
+
+      setTimeout(() => {
+        this.fadeItems.delete(item.id);
+      },1000);
 
     } else {
-      // لو موجود، ممكن نعمل toggle ونحذفه (اختياري)
-      this.allFavoriteItems.splice(index, 1);
-      this._ToastrService.warning('Product removed from favorites successfully');
-    }
 
-    // تحديث localStorage
-    localStorage.setItem('myFavProduct', JSON.stringify(this.allFavoriteItems));
-    this._FavoriteService.sync(this.allFavoriteItems.length);
+      this._ToastrService.warning(
+        'Product removed from favorites successfully'
+      );
+    }
   }
+
   showFadeAnimation(item: any): boolean {
     return this.fadeItems.has(item.id);
   }
 
-  isCart(item: any): boolean {
-    return this.cart.some(
+  isCart(item:any): boolean {
+    return this._CartService.cartProducts().some(
       cartItem => cartItem.product?.id === item.id
     );
+  }
+
+  getCartItem(item:any) {
+    return this._CartService.cartProducts().find(
+      cartItem => cartItem.product?.id === item.id
+    );
+  }
+
+  getAllCart(): void {
+    if (this.cartId()) {
+      this._CartService.getCart(this.cartId()).subscribe({
+        next: (res) => {
+
+          const products = res?.cartproduct || [];
+
+          this._CartService.cartProducts.set(products);
+
+          this._CartService.cartCount.set(
+            products.length
+          );
+        }
+      })
+    }
   }
 
   addToCart(item:any):void{
@@ -113,21 +133,4 @@ export class EssentialsSlidersComponent  implements OnInit {
     });
   }
 
-  getCartItem(item: any) {
-    return this.cart.find(
-      cartItem => cartItem.product?.id === item.id
-    );
-  }
-
-  getAllCart():void{
-    if(this.cartId()){
-      this._CartService.getCart(this.cartId()).subscribe({
-        next:(res)=>{
-          this.cart = res?.cartproduct || [];
-          this._CartService.cartCount.set(res.cartproduct.length)
-          this._CartService.cartProducts.set(res.cartproduct)
-        }
-      })
-    }
-  }
 }

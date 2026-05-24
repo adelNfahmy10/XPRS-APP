@@ -27,7 +27,7 @@ export class CartService {
     });
   }
 
-  getCartCount(cartId: string) {
+  getCartCount(cartId: string):Observable<any> {
     return this._HttpClient.get(`${environment.baseUrl}carts/${cartId}/`).pipe(
       tap((res: any) => {
         this.cartCount.set(res.cartproduct.length);

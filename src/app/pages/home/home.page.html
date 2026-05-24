@@ -37,6 +37,13 @@
   </ion-header>
 
   <ion-content>
+    <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+      <ion-refresher-content
+        pullingIcon="arrow-down"
+        refreshingSpinner="circles">
+      </ion-refresher-content>
+    </ion-refresher>
+
     <section class="home pb-5 mb-5">
       <app-main-home-slider></app-main-home-slider>
 

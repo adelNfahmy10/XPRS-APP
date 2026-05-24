@@ -8,6 +8,13 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+    <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-down"
+      refreshingSpinner="circles">
+    </ion-refresher-content>
+  </ion-refresher>
+
   @for (store of allStores; track $index) {
     <div class="stores pt-3 pb-3 mx-3" (click)="openLocation(store.coordinates)">
       <div class="store-image rounded">

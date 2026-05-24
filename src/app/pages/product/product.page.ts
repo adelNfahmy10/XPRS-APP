@@ -32,6 +32,8 @@ export class ProductPage implements OnInit {
   productSlug:any;
   isCheckProduct:boolean = false
 
+  productsRelated:any[] = []
+
   productImages: { src: string; alt: string }[] = [];
   mainIndex = 0;
 
@@ -44,6 +46,44 @@ export class ProductPage implements OnInit {
     this.getProductBySlug();
     this.getMessageInstallment()
     this.insuranceTerms()
+  }
+
+
+  handleRefresh(event: any) {
+    this._ActivatedRoute.paramMap.subscribe({
+      next: (params) => {
+        this.productSlug = params.get('slug');
+        this._ProductService.getProductDetails(this.productSlug).subscribe({
+          next: (res) => {
+            this.productData = res;
+            this.getAllCart()
+            this.getRelatedProducts()
+
+            this.productImages = [
+              { src: this.productData?.picture1, alt: this.productData?.picture1_alt },
+              { src: this.productData?.picture2, alt: this.productData?.picture2_alt },
+              { src: this.productData?.picture3, alt: this.productData?.picture3_alt },
+              { src: this.productData?.picture4, alt: this.productData?.picture4_alt },
+              { src: this.productData?.picture5, alt: this.productData?.picture5_alt },
+            ].filter(img => img.src);
+
+            this.mainIndex = 0;
+
+            // autoplay every 3 seconds
+            setInterval(() => {
+              this.nextImage();
+            }, 6000);
+          },
+        });
+
+        this.getBanksInstallment(this.productSlug)
+
+        event.target.complete();
+      },
+      error: () => {
+        event.target.complete();
+      }
+    });
   }
 
   getProductBySlug(): void {
@@ -79,10 +119,52 @@ export class ProductPage implements OnInit {
     });
   }
 
+  isCart(item:any): boolean {
+    return this._CartService.cartProducts().some(
+      cartItem => cartItem.product?.id === item.id
+    );
+  }
+
+  getCartItem(item:any) {
+    return this._CartService.cartProducts().find(
+      cartItem => cartItem.product?.id === item.id
+    );
+  }
+
+  getAllCart(): void {
+    if (this.cartId()) {
+      this._CartService.getCart(this.cartId()).subscribe({
+        next: (res) => {
+
+          const products = res?.cartproduct || [];
+
+          this._CartService.cartProducts.set(products);
+
+          this._CartService.cartCount.set(
+            products.length
+          );
+        }
+      })
+    }
+  }
+
   addToCart():void{
+    const cartItem = this.getCartItem(this.productData);
+
+    // 🟥 لو موجود → احذف
+    if (cartItem) {
+      this._CartService.deleteCart(cartItem.id).subscribe({
+        next: (res) => {
+          this.getAllCart();
+          this._ToastrService.warning('Product removed from cart successfully');
+        }
+      });
+      return;
+    }
+
     const data = {
       product: this.productSlug,
-      cart: this.cartId(),
+      cart: this.cartId() == '0' ? +this.cartId()! : this.cartId(),
       quantity: this.productData?.quantity || 1,
       product_property: null,
       card: null,
@@ -93,7 +175,6 @@ export class ProductPage implements OnInit {
     this._CartService.addCartProduct(data).subscribe({
       next: () => {
         this.getAllCart();
-        this.isCheckProduct = true
         this._ToastrService.success('Product added to cart successfully');
       },
       error:(err)=>{
@@ -103,19 +184,107 @@ export class ProductPage implements OnInit {
     });
   }
 
-  getAllCart():void{
-    if(this.cartId()){
-      this._CartService.getCart(this.cartId()).subscribe({
-        next:(res)=>{
-          this.cart = res?.cartproduct || [];
-          this._CartService.cartCount.set(res.cartproduct.length)
-          this._CartService.cartProducts.set(res.cartproduct)
-          this.isCheckProduct = this.cart.some(
-            product => product.product.id == this.productSlug
-          );
-        }
-      })
+  isInCart(): boolean {
+    return this._CartService.cartProducts().some(
+      (cartItem: any) => cartItem.product?.id === this.productData?.id
+    );
+  }
+
+
+  // حفظ العناصر اللي عليها animation
+  fadeItems: Set<number> = new Set();
+
+  // للتحقق إذا العنصر موجود في المفضلة
+  isFavorite(item:any): boolean {
+    if (!item) return false;
+    return this._FavoriteService.isFavorite(item);
+  }
+
+  // إضافة / إزالة من المفضلة
+  addToFavorite(item:any): void {
+
+    const added =
+    this._FavoriteService.toggle(item);
+
+    if(added){
+
+      this._ToastrService.success(
+        'Product added to favorites successfully'
+      );
+
+      this.fadeItems.add(item.id);
+
+      setTimeout(() => {
+        this.fadeItems.delete(item.id);
+      },1000);
+
+    } else {
+
+      this._ToastrService.warning(
+        'Product removed from favorites successfully'
+      );
     }
+  }
+
+  showFadeAnimation(item: any): boolean {
+    return this.fadeItems.has(item.id);
+  }
+
+  // get related products
+  getRelatedProducts(): void {
+    this._CategorieService.getProductsCategory(
+      '', // search
+      [this.productData?.category.id], // categories
+      [], // shop_categories
+      [], // subcategories
+      [], // brands
+      [], // graphicscard
+      [], // processors
+      [], // ram
+      [], // storage
+      '-id', // sort
+      10, // page_size
+      1 // page
+    ).subscribe({
+      next: (res) => {
+        this.productsRelated = res.results.filter(
+          (product: any) => product.id !== this.productSlug
+        );
+      }
+    });
+  }
+
+  // add related products to cart
+  addProductRelatedToCart(item:any):void{
+    const cartItem = this.getCartItem(item);
+
+    // 🟥 لو موجود → احذف
+    if (cartItem) {
+      this._CartService.deleteCart(cartItem.id).subscribe({
+        next: (res) => {
+          this.getAllCart();
+          this._ToastrService.warning('Product removed from cart successfully');
+        }
+      });
+      return;
+    }
+
+    const data = {
+      product: item.id,
+      cart: this.cartId,
+      quantity: item.quantity || 1,
+      product_property: null,
+      card: null,
+      branded_page_product: null,
+      insurance: null
+    };
+
+    this._CartService.addCartProduct(data).subscribe({
+      next: () => {
+        this.getAllCart();
+        this._ToastrService.success('Product added to cart successfully');
+      }
+    });
   }
 
 
@@ -173,7 +342,6 @@ export class ProductPage implements OnInit {
       this.quantity -= 1;
     }
   }
-
 
   // حالة كل collapse
   openSection: 'fullPrice' | 'installments' | 'payLater' | 'preOrder' | null = null;
@@ -304,112 +472,5 @@ export class ProductPage implements OnInit {
           }
         );
     }
-  }
-
-  productsRelated:any[] = []
-
-  // get related products
-  getRelatedProducts(): void {
-    this._CategorieService.getProductsCategory(
-      '', // search
-      [this.productData?.category.id], // categories
-      [], // shop_categories
-      [], // subcategories
-      [], // brands
-      [], // graphicscard
-      [], // processors
-      [], // ram
-      [], // storage
-      '-id', // sort
-      10, // page_size
-      1 // page
-    ).subscribe({
-      next: (res) => {
-        this.productsRelated = res.results.filter(
-          (product: any) => product.id !== this.productSlug
-        );
-      }
-    });
-  }
-
-  // حفظ العناصر اللي عليها animation
-  allFavoriteItems: any[] = JSON.parse(localStorage.getItem('myFavProduct') || '[]');
-  fadeItems: Set<number> = new Set();
-
-  // للتحقق إذا العنصر موجود في المفضلة
-  isFavorite(item: any): boolean {
-    if (!item || !this.allFavoriteItems) return false;
-
-    return this.allFavoriteItems.some(fav => fav.id === item.id);
-  }
-  // إضافة / إزالة من المفضلة
-  addToFavorite(item: any): void {
-    const index = this.allFavoriteItems.findIndex(fav => fav.id === item.id);
-
-    if (index === -1) {
-      // لو مش موجود أضفه
-      this.allFavoriteItems.push(item);
-      this._ToastrService.success('Product added to favorites successfully');
-      // تشغيل animation
-      this.fadeItems.add(item.id);
-      setTimeout(() => this.fadeItems.delete(item.id), 1000); // مدة الfade CSS
-
-    } else {
-      // لو موجود، ممكن نعمل toggle ونحذفه (اختياري)
-      this.allFavoriteItems.splice(index, 1);
-      this._ToastrService.warning('Product removed from favorites successfully');
-    }
-
-    // تحديث localStorage
-    localStorage.setItem('myFavProduct', JSON.stringify(this.allFavoriteItems));
-    this._FavoriteService.sync(this.allFavoriteItems.length);
-  }
-
-  showFadeAnimation(item: any): boolean {
-    return this.fadeItems.has(item.id);
-  }
-
-  isCart(item: any): boolean {
-    return this.cart.some(
-      cartItem => cartItem.product?.id === item.id
-    );
-  }
-
-  addProductRelatedToCart(item:any):void{
-    const cartItem = this.getCartItem(item);
-
-    // 🟥 لو موجود → احذف
-    if (cartItem) {
-      this._CartService.deleteCart(cartItem.id).subscribe({
-        next: (res) => {
-          this.getAllCart();
-          this._ToastrService.warning('Product removed from cart successfully');
-        }
-      });
-      return;
-    }
-
-    const data = {
-      product: item.id,
-      cart: this.cartId,
-      quantity: item.quantity || 1,
-      product_property: null,
-      card: null,
-      branded_page_product: null,
-      insurance: null
-    };
-
-    this._CartService.addCartProduct(data).subscribe({
-      next: () => {
-        this.getAllCart();
-        this._ToastrService.success('Product added to cart successfully');
-      }
-    });
-  }
-
-  getCartItem(item: any) {
-    return this.cart.find(
-      cartItem => cartItem.product?.id === item.id
-    );
   }
 }

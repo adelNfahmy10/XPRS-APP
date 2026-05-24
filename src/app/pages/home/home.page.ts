@@ -1,7 +1,7 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, effect, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonMenuButton } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonMenuButton, IonRefresher, IonRefresherContent } from '@ionic/angular/standalone';
 import { MainHomeSliderComponent } from "src/app/components/main-home-slider/main-home-slider.component";
 import { CategoriesSliderComponent } from "src/app/components/categories-slider/categories-slider.component";
 import { BrandsSlidersComponent } from "src/app/components/brands-sliders/brands-sliders.component";
@@ -14,16 +14,31 @@ import { TabsComponent } from "src/app/components/tabs/tabs.component";
 import { CartService } from 'src/core/services/cart/cart-service';
 import { CartBarComponent } from "src/app/components/cart-bar/cart-bar.component";
 import { ThemeService } from 'src/core/services/theme/theme-service';
+import { RefreshComponent } from "src/app/components/refresh/refresh.component";
+import { HomeService } from 'src/core/services/home/home-service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonMenuButton, MainHomeSliderComponent, CategoriesSliderComponent, BrandsSlidersComponent, SpeicalsOffersSlidersComponent, EssentialsSlidersComponent, TopSellingSlidersComponent, SpecialSellingSlidersComponent, RouterLink, TabsComponent, CartBarComponent],
+  imports: [IonRefresherContent, IonRefresher, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonMenuButton, MainHomeSliderComponent, CategoriesSliderComponent, BrandsSlidersComponent, SpeicalsOffersSlidersComponent, EssentialsSlidersComponent, TopSellingSlidersComponent, SpecialSellingSlidersComponent, RouterLink, TabsComponent, CartBarComponent, RefreshComponent],
 })
 export class HomePage {
-  readonly _ThemeService = inject(ThemeService)
+  readonly _ThemeService = inject(ThemeService);
+  private readonly _HomeService = inject(HomeService);
+
+  handleRefresh(event: any) {
+    this._HomeService.getHomeData().subscribe({
+      next: (res) => {
+        event.target.complete();
+      },
+      error: () => {
+        event.target.complete();
+      }
+    });
+
+  }
 
   // Change Themes (Dark | Light) Mode
   changeTheme() {

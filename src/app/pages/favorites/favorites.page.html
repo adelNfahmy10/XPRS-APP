@@ -8,8 +8,15 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+    <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-down"
+      refreshingSpinner="circles">
+    </ion-refresher-content>
+  </ion-refresher>
+
   <div class="row g-3 p-3">
-    @for (item of allFavorites; track $index) {
+    @for (item of favoritesItemes(); track $index) {
       <div class="col-6">
         <div class="offer-silde rounded-4">
 

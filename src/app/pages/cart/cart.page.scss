@@ -26,32 +26,37 @@ $main-color: #81FB37;
     }
   }
 }
-.quantity-selector {
-  input {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    padding: 0;
-    background: transparent;
-    color: #fff;
-  }
-  button {
-    width: 25px;
-    height: 25px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0;
-    font-size: 1.2rem;
-    border: 1px solid $main-color;
-    color: #fff;
-  }
+.count-btn{
+  background-color: $main-color;
+  border-radius: 50%;
+  border-color: $main-color;
 }
+.quantity-selector button {
+  width: 25px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  font-size: 1.2rem;
+}
+.quantity-selector input {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  padding: 0;
+}
+/* Chrome, Edge, Safari */
 input[type=number]::-webkit-outer-spin-button,
 input[type=number]::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 .swipe-msg{
   color: #f00 !important;
   span{

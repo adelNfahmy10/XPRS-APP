@@ -8,6 +8,13 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+    <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-down"
+      refreshingSpinner="circles">
+    </ion-refresher-content>
+  </ion-refresher>
+
   <div class="cart">
     @if(cartProducts().length){
       <ion-list>
@@ -43,10 +50,10 @@
                       <label class="span_bold mb-1 d-block">Quantity:</label>
                       <div class="quantity-selector d-flex align-items-center gap-2">
                         <!-- زر النقصان -->
-                        <button type="button" (click)="decreaseQuantity(item)" [disabled]="quantity <= 1" class="btn count-btn">-</button>
+                        <button type="button" (click)="decreaseQuantity(item)" [disabled]="getQuantity(item) <= 1" class="btn count-btn">-</button>
 
                         <!-- حقل العدد -->
-                        <input type="number" [(ngModel)]="quantity" min="1" class="form-control text-center" />
+                        <input type="number" [ngModel]="getQuantity(item)" min="1" class="form-control text-center" />
 
                         <!-- زر الزيادة -->
                         <button type="button" (click)="increaseQuantity(item)" class="btn count-btn">+</button>

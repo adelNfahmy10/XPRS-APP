@@ -1,24 +1,29 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonRefresher, IonRefresherContent } from '@ionic/angular/standalone';
 import { ContactUsService } from 'src/core/services/contact-us/contact-us-service';
 import { RouterLink } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { RefreshComponent } from "src/app/components/refresh/refresh.component";
 
 @Component({
   selector: 'app-contact-us',
   templateUrl: './contact-us.page.html',
   styleUrls: ['./contact-us.page.scss'],
   standalone: true,
-  imports: [IonBackButton, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, RouterLink, ReactiveFormsModule]
+  imports: [IonRefresherContent, IonRefresher, IonBackButton, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, RouterLink, ReactiveFormsModule, RefreshComponent]
 })
-export class ContactUsPage implements OnInit {
+export class ContactUsPage {
   private readonly _ContactUsService = inject(ContactUsService)
   private readonly _ToastrService = inject(ToastrService)
   private readonly _FormBuilder = inject(FormBuilder)
 
-  ngOnInit() {
+  handleRefresh(event: any) {
+
+    this.contactUsForm.reset();
+
+    event.target.complete();
   }
 
   contactUsForm:FormGroup = this._FormBuilder.group({
