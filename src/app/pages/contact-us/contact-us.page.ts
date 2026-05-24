@@ -1,18 +1,17 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonRefresher, IonRefresherContent } from '@ionic/angular/standalone';
 import { ContactUsService } from 'src/core/services/contact-us/contact-us-service';
 import { RouterLink } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { RefreshComponent } from "src/app/components/refresh/refresh.component";
 
 @Component({
   selector: 'app-contact-us',
   templateUrl: './contact-us.page.html',
   styleUrls: ['./contact-us.page.scss'],
   standalone: true,
-  imports: [IonRefresherContent, IonRefresher, IonBackButton, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, RouterLink, ReactiveFormsModule, RefreshComponent]
+  imports: [IonRefresherContent, IonRefresher, IonBackButton, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, RouterLink, ReactiveFormsModule ]
 })
 export class ContactUsPage {
   private readonly _ContactUsService = inject(ContactUsService)

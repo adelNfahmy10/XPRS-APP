@@ -1,19 +1,18 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonRefresher, IonRefresherContent } from '@ionic/angular/standalone';
+import { IonContent, IonRefresher, IonRefresherContent } from '@ionic/angular/standalone';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from 'src/core/services/auth/auth-service';
 import { ToastrService } from 'ngx-toastr';
 import { ThemeService } from 'src/core/services/theme/theme-service';
-import { RefreshComponent } from "src/app/components/refresh/refresh.component";
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
   standalone: true,
-  imports: [IonRefresherContent, IonRefresher, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, ReactiveFormsModule, RouterLink, RefreshComponent]
+  imports: [IonRefresherContent, IonRefresher, IonContent, CommonModule, FormsModule, ReactiveFormsModule, RouterLink ]
 })
 export class RegisterPage {
   private readonly _FormBuilder = inject(FormBuilder)

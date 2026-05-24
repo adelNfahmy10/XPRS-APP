@@ -2,18 +2,17 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonSearchbar, IonLabel, IonList, IonItem, IonButtons, IonMenuButton, IonIcon, IonSkeletonText, IonThumbnail, IonButton, IonRefresher, IonRefresherContent } from '@ionic/angular/standalone';
-import { CartService } from 'src/core/services/cart/cart-service';
 import { debounceTime, distinctUntilChanged, Subject, switchMap } from 'rxjs';
 import { CategorieService } from 'src/core/services/categories/categorie-service';
 import { RouterLink } from '@angular/router';
-import { RefreshComponent } from "src/app/components/refresh/refresh.component";
+
 
 @Component({
   selector: 'app-search',
   templateUrl: './search.page.html',
   styleUrls: ['./search.page.scss'],
   standalone: true,
-  imports: [IonRefresherContent, IonRefresher, IonButton, IonSkeletonText, IonIcon, IonButtons, IonItem, IonList, IonLabel, IonSearchbar, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, RouterLink, IonMenuButton, IonThumbnail, RefreshComponent]
+  imports: [IonRefresherContent, IonRefresher, IonButton, IonSkeletonText, IonIcon, IonButtons, IonItem, IonList, IonLabel, IonSearchbar, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, RouterLink, IonMenuButton, IonThumbnail ]
 })
 export class SearchPage implements OnInit{
   private readonly _CategorieService = inject(CategorieService);

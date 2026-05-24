@@ -8,13 +8,10 @@ import { BrandsSlidersComponent } from "src/app/components/brands-sliders/brands
 import { SpeicalsOffersSlidersComponent } from "src/app/components/speicals-offers-sliders/speicals-offers-sliders.component";
 import { EssentialsSlidersComponent } from "src/app/components/essentials-sliders/essentials-sliders.component";
 import { TopSellingSlidersComponent } from "src/app/components/top-selling-sliders/top-selling-sliders.component";
-import { SpecialSellingSlidersComponent } from "src/app/components/special-selling-sliders/special-selling-sliders.component";
 import { RouterLink } from '@angular/router';
 import { TabsComponent } from "src/app/components/tabs/tabs.component";
-import { CartService } from 'src/core/services/cart/cart-service';
 import { CartBarComponent } from "src/app/components/cart-bar/cart-bar.component";
 import { ThemeService } from 'src/core/services/theme/theme-service';
-import { RefreshComponent } from "src/app/components/refresh/refresh.component";
 import { HomeService } from 'src/core/services/home/home-service';
 
 @Component({
@@ -22,7 +19,7 @@ import { HomeService } from 'src/core/services/home/home-service';
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [IonRefresherContent, IonRefresher, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonMenuButton, MainHomeSliderComponent, CategoriesSliderComponent, BrandsSlidersComponent, SpeicalsOffersSlidersComponent, EssentialsSlidersComponent, TopSellingSlidersComponent, SpecialSellingSlidersComponent, RouterLink, TabsComponent, CartBarComponent, RefreshComponent],
+  imports: [IonRefresherContent, IonRefresher, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonMenuButton, MainHomeSliderComponent, CategoriesSliderComponent, BrandsSlidersComponent, SpeicalsOffersSlidersComponent, EssentialsSlidersComponent, TopSellingSlidersComponent, RouterLink, TabsComponent, CartBarComponent ],
 })
 export class HomePage {
   readonly _ThemeService = inject(ThemeService);

@@ -1,21 +1,20 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonRefresher, IonRefresherContent } from '@ionic/angular/standalone';
+import { IonContent, IonRefresher, IonRefresherContent } from '@ionic/angular/standalone';
 import { AuthService } from 'src/core/services/auth/auth-service';
 import { CartService } from 'src/core/services/cart/cart-service';
 import { CheckoutService } from 'src/core/services/checkout/checkout-service';
 import { ToastrService } from 'ngx-toastr';
 import { Router, RouterLink } from '@angular/router';
 import { ThemeService } from 'src/core/services/theme/theme-service';
-import { RefreshComponent } from "src/app/components/refresh/refresh.component";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [IonRefresherContent, IonRefresher, IonContent, CommonModule, FormsModule, ReactiveFormsModule, RouterLink, RefreshComponent]
+  imports: [IonRefresherContent, IonRefresher, IonContent, CommonModule, FormsModule, ReactiveFormsModule, RouterLink ]
 })
 export class LoginPage {
   private readonly _FormBuilder = inject(FormBuilder)

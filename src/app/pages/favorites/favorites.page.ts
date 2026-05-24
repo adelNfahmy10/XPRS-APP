@@ -6,14 +6,13 @@ import { ToastrService } from 'ngx-toastr';
 import { CartService } from 'src/core/services/cart/cart-service';
 import { RouterLink } from '@angular/router';
 import { FavoriteService } from 'src/core/services/favorites/favorite-service';
-import { RefreshComponent } from "src/app/components/refresh/refresh.component";
 
 @Component({
   selector: 'app-favorites',
   templateUrl: './favorites.page.html',
   styleUrls: ['./favorites.page.scss'],
   standalone: true,
-  imports: [IonRefresherContent, IonRefresher, IonButton, IonBackButton, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, RouterLink, RefreshComponent]
+  imports: [IonRefresherContent, IonRefresher, IonButton, IonBackButton, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, RouterLink ]
 })
 export class FavoritesPage implements OnInit {
 private readonly _ToastrService = inject(ToastrService)

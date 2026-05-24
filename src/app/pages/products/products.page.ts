@@ -3,18 +3,14 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonItem, IonLabel, IonButtons, IonBackButton, IonRefresher, IonRefresherContent } from '@ionic/angular/standalone';
 import { CategorieService } from 'src/core/services/categories/categorie-service';
-import { CartService } from 'src/core/services/cart/cart-service';
-import { ProductService } from 'src/core/services/products/product-service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
-import { RefreshComponent } from "src/app/components/refresh/refresh.component";
 
 @Component({
   selector: 'app-products',
   templateUrl: './products.page.html',
   styleUrls: ['./products.page.scss'],
   standalone: true,
-  imports: [IonRefresherContent, IonRefresher, IonBackButton, IonButtons, IonLabel, IonItem, IonList, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, RouterLink, RefreshComponent]
+  imports: [IonRefresherContent, IonRefresher, IonBackButton, IonButtons, IonLabel, IonItem, IonList, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, RouterLink ]
 })
 export class ProductsPage implements OnInit {
   private readonly _CategorieService = inject(CategorieService)

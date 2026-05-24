@@ -5,14 +5,14 @@ import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonMenuButton,
 import { CartBarComponent } from "src/app/components/cart-bar/cart-bar.component";
 import { Router, RouterLink } from '@angular/router';
 import { CartService } from 'src/core/services/cart/cart-service';
-import { RefreshComponent } from "src/app/components/refresh/refresh.component";
+
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
   standalone: true,
-  imports: [IonBackButton, IonRefresherContent, IonRefresher, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonMenuButton, CartBarComponent, RouterLink, RefreshComponent]
+  imports: [IonBackButton, IonRefresherContent, IonRefresher, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, CartBarComponent, RouterLink ]
 })
 export class ProfilePage {
   private readonly _CartService = inject(CartService)

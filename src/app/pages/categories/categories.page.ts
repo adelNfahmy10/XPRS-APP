@@ -6,14 +6,13 @@ import { HomeService } from 'src/core/services/home/home-service';
 import { RouterLink } from '@angular/router';
 import { TabsComponent } from "src/app/components/tabs/tabs.component";
 import { CartBarComponent } from "src/app/components/cart-bar/cart-bar.component";
-import { RefreshComponent } from "src/app/components/refresh/refresh.component";
 
 @Component({
   selector: 'app-categories',
   templateUrl: './categories.page.html',
   styleUrls: ['./categories.page.scss'],
   standalone: true,
-  imports: [IonRefresherContent, IonRefresher, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonMenuButton, RouterLink, TabsComponent, CartBarComponent, RefreshComponent]
+  imports: [IonRefresherContent, IonRefresher, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonMenuButton, RouterLink, TabsComponent, CartBarComponent ]
 })
 export class CategoriesPage implements OnInit {
   private readonly _HomeService = inject(HomeService)

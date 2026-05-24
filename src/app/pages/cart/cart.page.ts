@@ -7,14 +7,13 @@ import { switchMap } from 'rxjs';
 import { CheckoutService } from 'src/core/services/checkout/checkout-service';
 import { RouterLink } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { RefreshComponent } from "src/app/components/refresh/refresh.component";
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.page.html',
   styleUrls: ['./cart.page.scss'],
   standalone: true,
-  imports: [IonRefresherContent, IonRefresher, IonItemOption, IonItemOptions, IonLabel, IonItemSliding, IonList, IonItem, IonBackButton, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, RouterLink, RefreshComponent]
+  imports: [IonRefresherContent, IonRefresher, IonItemOption, IonItemOptions, IonLabel, IonItemSliding, IonList, IonItem, IonBackButton, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, RouterLink ]
 })
 export class CartPage implements OnInit {
   private readonly _CartService = inject(CartService)
