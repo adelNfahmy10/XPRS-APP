@@ -124,10 +124,10 @@
           @for (pay of payments_arr_avail; track $index) {
             @if(pay.code == 1){
               <div class="form-check form-check-inline d-flex align-items-center gap-2">
-                <input class="form-check-input" formControlName="payment_method" type="radio" name="inlineRadioOptions" id="inlineRadio1" [value]="pay.code">
+                <input class="form-check-input" formControlName="payment_method" type="radio" name="payment_method" id="payment_method" [value]="pay.code">
                 <div>
                   <img src="assets/images/checkout-image/cash.png" class="payment-image" [alt]="pay.name">
-                  <label class="form-check-label" for="inlineRadio1">{{pay.name}}</label>
+                  <label class="form-check-label" for="payment_method">{{pay.name}}</label>
                 </div>
               </div>
             }
