@@ -1,28 +1,32 @@
-import { Component, effect, inject, OnInit, signal, WritableSignal } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, effect, inject, OnInit, signal, WritableSignal } from '@angular/core';
+import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { IonApp, IonSplitPane, IonMenu, IonContent, IonList, IonListHeader, IonNote, IonMenuToggle, IonItem, IonIcon, IonLabel, IonRouterOutlet, IonRouterLink, IonToggle } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, heartOutline, heartSharp, archiveOutline, archiveSharp, trashOutline, trashSharp, warningOutline, warningSharp, bookmarkOutline, bookmarkSharp } from 'ionicons/icons';
 import { CartService } from 'src/core/services/cart/cart-service';
 import { FavoriteService } from 'src/core/services/favorites/favorite-service';
 import { NgxSpinnerComponent } from "ngx-spinner";
+import { Preferences } from '@capacitor/preferences';
 
 // Permisions
 import { Geolocation } from '@capacitor/geolocation';
 import { PushNotifications } from '@capacitor/push-notifications';
 import { ThemeService } from 'src/core/services/theme/theme-service';
 import { Capacitor } from '@capacitor/core';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
   imports: [RouterLink, RouterLinkActive, IonApp, IonSplitPane, IonMenu, IonContent, IonList, IonMenuToggle, IonItem, IonLabel, IonRouterLink, IonRouterOutlet, NgxSpinnerComponent],
+  schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppComponent {
   private readonly _CartService = inject(CartService)
   private readonly _FavoriteService = inject(FavoriteService)
   readonly _ThemeService = inject(ThemeService)
+  readonly _Router = inject(Router)
 
   token = this._CartService.token
   cartId = this._CartService.cartId
@@ -45,7 +49,7 @@ export class AppComponent {
     addIcons({ mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, heartOutline, heartSharp, archiveOutline, archiveSharp, trashOutline, trashSharp, warningOutline, warningSharp, bookmarkOutline, bookmarkSharp });
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     if (Capacitor.isNativePlatform()) {
       this.initPush();
     }
@@ -57,6 +61,37 @@ export class AppComponent {
     } else {
       this.getCart();
     }
+
+    const result = await Preferences.get({
+      key: 'welcome_seen'
+    });
+
+    this.showWelcome.set(result.value);
+  }
+
+  showWelcome:any = signal(false);
+  isClosing = signal(false);
+
+  async closeWelcome(path: string) {
+
+    // 1. احفظ إنه اتشاف
+    await Preferences.set({
+      key: 'welcome_seen',
+      value: 'true'
+    });
+
+    // 2. روح للصفحة الأول
+    this._Router.navigate(['/' + path]);
+
+    // 1. شغل animation الأول
+    this.isClosing.set(true);
+
+    // 3. بعد لحظة صغيرة اقفل الـ layout
+    setTimeout(() => {
+      this.showWelcome.set(false);
+      this.isClosing.set(false);
+    }, 500);
+
   }
 
   // Add Cart When Open App
@@ -141,4 +176,8 @@ export class AppComponent {
       !this._ThemeService.isDark()
     );
   }
+
+
+
+
 }

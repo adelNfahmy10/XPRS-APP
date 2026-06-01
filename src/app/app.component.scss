@@ -158,3 +158,36 @@ ion-item.selected {
 ::ng-deep ngx-spinner {
   pointer-events: none !important;
 }
+
+.layout{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  opacity: 1;
+  transform: scale(1);
+  transition: all .5s ease-in-out;
+  &.hide {
+    opacity: 0;
+    transform: scale(0.95);
+    pointer-events: none;
+  }
+}
+
+button:hover{
+  background-color: $main-color;
+}
+
+/* Swiper pagination bullets */
+swiper-container::part(bullet) {
+  background: #414141;
+  opacity: 1;
+  transition: all .4s;
+}
+swiper-container::part(bullet-active) {
+  background: $main-color;
+  width: 20px;
+  transition: all .4s;
+}

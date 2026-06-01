@@ -73,5 +73,54 @@
         <img src="assets/icon/xprs_spinner.gif" class="w-100" alt="XPRS">
       </div>
     </ngx-spinner>
+
+
+    @if(showWelcome()){
+      <div class="layout" [class.hide]="isClosing()">
+        <div class="skip position-absolute top-0 end-0 m-3" (click)="closeWelcome('home')">
+          <span class="main-color close">
+            Skip
+          </span>
+        </div>
+
+        <div class="header mt-3">
+          <img src="assets/icon/logo.gif" alt="XPRS">
+        </div>
+
+        <div class="layout-content">
+          <swiper-container pagination="true">
+            <swiper-slide class="d-flex justify-content-center align-items-center text-center p-3 mb-4">
+              <div class="connect">
+                <h2 class="fw-bold">CONNECT</h2>
+                <p>connect and discover our collection of permium and new electronics products.</p>
+              </div>
+            </swiper-slide>
+
+            <swiper-slide class="d-flex justify-content-center align-items-center text-center p-3 mb-4">
+              <div class="play">
+                <h2 class="fw-bold">PLAY</h2>
+                <p>Dive in the world of gaming with no limits. We have it all.</p>
+              </div>
+            </swiper-slide>
+
+            <swiper-slide class="d-flex justify-content-center align-items-center text-center p-3 mb-4">
+              <div class="explore">
+                <h2 class="fw-bold">EXPLORE</h2>
+                <p>This is not all of it. We have a range of accessories to get the full experience</p>
+              </div>
+            </swiper-slide>
+          </swiper-container>
+
+          <div class="btn-acc text-center mt-3">
+            <button class="btn main-bg w-100 rounded-5 text-white" (click)="closeWelcome('register')">Create Account</button>
+            <p class="my-2">Already have an account? <span class="main-color" (click)="closeWelcome('login')">Log in</span></p>
+          </div>
+        </div>
+      </div>
+    }
+
   </ion-split-pane>
+
+
+
 </ion-app>
