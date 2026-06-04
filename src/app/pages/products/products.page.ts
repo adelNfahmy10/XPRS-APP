@@ -183,10 +183,13 @@ export class ProductsPage implements OnInit {
 
   // Filters & Sorting Methods
   toggleFiters:boolean = false
+
   toggleFilterSection(): void {
     this.toggleFiters = !this.toggleFiters
+    if(!this.toggleFiters){
+      this.resetFilters()
+    }
   }
-
 
   onSearch(event: any) {
     this.searchTerm = event.target.value || '';
