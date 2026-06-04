@@ -49,6 +49,10 @@ export class AppComponent {
     addIcons({ mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, heartOutline, heartSharp, archiveOutline, archiveSharp, trashOutline, trashSharp, warningOutline, warningSharp, bookmarkOutline, bookmarkSharp });
   }
 
+
+  showWelcome:any = signal(false);
+  isClosing = signal(false);
+
   async ngOnInit() {
     if (Capacitor.isNativePlatform()) {
       this.initPush();
@@ -68,9 +72,6 @@ export class AppComponent {
 
     this.showWelcome.set(result.value);
   }
-
-  showWelcome:any = signal(false);
-  isClosing = signal(false);
 
   async closeWelcome(path: string) {
 

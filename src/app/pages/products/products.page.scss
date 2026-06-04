@@ -27,3 +27,98 @@ $main-color: #81FB37;
   }
 }
 
+.filter-icon{
+  span{
+    font-size: 12px;
+  }
+}
+
+
+.filters-bar {
+  display: flex;
+  gap: 5px;
+  padding: 10px;
+  align-items: center;
+}
+
+
+
+/* ===== SEARCH ===== */
+.search {
+  --border-radius:20px;
+  --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --background: var(--ion-item-background);
+  --color: var(--ion-text-color);
+  --placeholder-color: gray;
+}
+
+/* ===== SORT BOX ===== */
+.sort-box {
+  position: relative;
+  min-width: 120px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  background-color: var(--ion-item-background);
+  select {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 20px;
+    background-color: var(--ion-item-background);
+    font-size: 13px;
+    font-weight: 500;
+    outline: none;
+    appearance: none;
+    cursor: pointer;
+    transition: 0.2s ease;
+    border: none;
+    &:focus {
+      box-shadow: 0 0 0 3px rgba(129, 251, 55, 0.1);
+    }
+  }
+
+  /* arrow */
+  &::after {
+    content: "⌄";
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: #666;
+  }
+}
+
+/* ===== Range Price ===== */
+.range-price {
+  padding: 10px 0;
+
+  ion-range {
+    --bar-height: 6px;
+    --bar-background: #e5e7eb3f;
+    --bar-background-active: #81FB37;
+    --border-radius: 20px;
+
+    --knob-size: 22px;
+    --knob-background: #81FB37;
+    --pin-background: #81FB37;
+    --pin-color: #fff;
+  }
+
+  span{
+    font-size: 12px;
+    font-weight: 500;
+  }
+}
+
+/* ===== Reset ===== */
+.reset{
+  span{
+    font-size: 12px;
+    font-weight: 500;
+    color: #81FB37;
+    cursor: pointer;
+    border: 1px solid #81FB37;
+    padding: 5px 10px;
+    border-radius: 20px;
+  }
+}

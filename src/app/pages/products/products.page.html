@@ -3,21 +3,93 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
-    <ion-title class="text-center me-5">Products</ion-title>
+
+    <ion-title class="text-center">Products</ion-title>
+
+    <ion-buttons slot="end">
+      <div class="filter-icon d-flex flex-column align-items-center gap-0 me-2" (click)="toggleFilterSection()">
+        @if(toggleFiters){
+          <i class="fa-solid fa-filter-circle-xmark main-color"></i>
+        } @else {
+          <i class="fa-solid fa-filter"></i>
+        }
+        <span [class]="toggleFiters ? 'main-color' : ''">Filter</span>
+      </div>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-    <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
     <ion-refresher-content
       pullingIcon="arrow-down"
       refreshingSpinner="circles">
     </ion-refresher-content>
   </ion-refresher>
 
+  @if(toggleFiters){
+    <div class="filters-section border-bottom">
+      <div class="filters-bar">
+        <!-- Search -->
+        <ion-searchbar
+          #searchBar
+          class="search"
+          placeholder="Search..."
+          (ionInput)="onSearch($event)">
+        </ion-searchbar>
+
+        <!-- Sort -->
+        <div class="sort-box">
+
+          <select
+            [(ngModel)]="selectedSort"
+            (change)="onSortChange()">
+
+            <option value="">Default</option>
+            <option value="priceAsc">Price Low → High</option>
+            <option value="priceDesc">Price High → Low</option>
+            <option value="nameAsc">Name A → Z</option>
+
+          </select>
+
+        </div>
+      </div>
+
+      <div class="range-price px-4 pb-3 p-0">
+
+        <div class="price-values d-flex justify-content-center align-items-center gap-2">
+          <span>{{ priceRange.lower | number }} EGP</span> -
+          <span>{{ priceRange.upper | number }} EGP</span>
+        </div>
+
+        <ion-range
+          class="m-0 p-0 rounded-5"
+          aria-label="Price Range"
+          [dualKnobs]="true"
+          [min]="0"
+          [max]="200000"
+          [step]="10"
+          [(ngModel)]="priceRange"
+          (ionChange)="onPriceChange()"
+        >
+          <ion-label slot="start">0</ion-label>
+          <ion-label slot="end">200k</ion-label>
+        </ion-range>
+
+
+      </div>
+
+      @if (hasActiveFilters()) {
+        <div class="reset mb-3 text-end">
+          <span (click)="resetFilters()">Reset Filters</span>
+        </div>
+      }
+    </div>
+  }
+
   <div class="products-category">
     <ion-list>
-      @for (product of productsRelated; track $index) {
+      @for (product of filteredProducts; track $index) {
         @if(product?.id){
           <ion-item [routerLink]="'/product/' + product?.id">
             <ion-label>
@@ -44,7 +116,6 @@
             </ion-label>
           </ion-item>
         }
-
       } @empty {
         <h3 class="text-center">No Products Found</h3>
         <div class="shop-btn text-center my-3" routerLink="/home">
@@ -54,4 +125,5 @@
 
     </ion-list>
   </div>
+
 </ion-content>
