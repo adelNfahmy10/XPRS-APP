@@ -105,7 +105,10 @@
             type="button"
             class="tab-btn rounded-2 text-center main-border"
             [ngClass]="{
-              'active-tab text-white main-bg': tabsSection == 'fullPrice'
+              'active-tab': tabsSection == 'fullPrice',
+            }"
+            [ngStyle]="{
+              'color' : _ThemeService.isDark() ? '#F8F8F8' : '#000'
             }"
             (click)="toggleSection('fullPrice')"
           >
@@ -118,7 +121,10 @@
           type="button"
           class="tab-btn rounded-2 text-center main-border"
           [ngClass]="{
-            'active-tab text-white main-bg': tabsSection == 'installments'
+            'active-tab': tabsSection == 'installments'
+          }"
+          [ngStyle]="{
+            'color' : _ThemeService.isDark() ? '#F8F8F8' : '#000'
           }"
           (click)="toggleSection('installments'); choosePaymentType('installments')"
         >
@@ -131,7 +137,10 @@
             type="button"
             class="tab-btn rounded-2 text-center main-border"
             [ngClass]="{
-              'active-tab text-white main-bg': tabsSection == 'preOrder'
+              'active-tab': tabsSection == 'preOrder'
+            }"
+            [ngStyle]="{
+              'color' : _ThemeService.isDark() ? '#F8F8F8' : '#000'
             }"
             (click)="toggleSection('preOrder')"
           >
@@ -145,6 +154,9 @@
           class="tab-btn rounded-2 text-center main-border"
           [ngClass]="{
             'active-tab': tabsSection == 'payLater'
+          }"
+          [ngStyle]="{
+            'color' : _ThemeService.isDark() ? '#F8F8F8' : '#000'
           }"
           (click)="toggleSection('payLater')"
         >
@@ -289,7 +301,7 @@
     </div>
 
     <!-- Add To Cart Btn -->
-    <div class="add-to-cart mt-1">
+    <div class="add-to-cart mt-3">
       @if(productData?.availability == 'In Stock'){
         <button
           class="btn main-bg btn-add w-100"

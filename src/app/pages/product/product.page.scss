@@ -106,13 +106,13 @@ $main-color: #81FB37;
       transition: all 0.2s ease;
       cursor: pointer;
       background-color: transparent;
-      border: 1px solid #ccc;
       padding: 8px 15px;
     }
 
     .active-tab {
       border-color: $main-color;
       background-color: $main-color;
+      color: #fff !important;
     }
 
     .contents{

@@ -74,6 +74,8 @@ export class AppComponent {
     if (Capacitor.isNativePlatform()) {
       this.initPush();
     }
+
+    this.changeTheme()
     this._ThemeService.loadTheme();
 
     const id = this.cartId();
@@ -84,7 +86,6 @@ export class AppComponent {
     }
 
   }
-
 
   // Add Cart When Open App
   addCart():void{

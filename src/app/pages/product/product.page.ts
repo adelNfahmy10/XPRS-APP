@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { CartService } from 'src/core/services/cart/cart-service';
 import { CategorieService } from 'src/core/services/categories/categorie-service';
 import { FavoriteService } from 'src/core/services/favorites/favorite-service';
+import { ThemeService } from 'src/core/services/theme/theme-service';
 
 @Component({
   selector: 'app-product',
@@ -24,6 +25,7 @@ export class ProductPage implements OnInit {
   private readonly _CartService = inject(CartService)
   private readonly _CategorieService = inject(CategorieService)
   private readonly _FavoriteService = inject(FavoriteService)
+  readonly _ThemeService = inject(ThemeService)
 
   cart:any[] = []
   cartId = this._CartService.cartId

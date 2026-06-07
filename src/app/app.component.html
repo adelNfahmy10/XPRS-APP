@@ -71,22 +71,19 @@
     </ion-menu>
 
 
-    @if(!showWelcome){
-      <!-- Pages Routers -->
-      <ion-router-outlet id="main-content"></ion-router-outlet>
-    }
-
+    <!-- Pages Routers -->
+    <ion-router-outlet id="main-content"></ion-router-outlet>
 
     <!-- Welcome Section-->
     @if(showWelcome){
-      <div class="layout" [class.hide]="isClosing()">
-        <div class="skip position-absolute top-0 end-0 m-3" (click)="closeWelcome('home')">
+      <div class="layout d-flex flex-column justify-content-center" [class.hide]="isClosing()">
+        <div class="skip" (click)="closeWelcome('home')">
           <span class="main-color close">
             Skip
           </span>
         </div>
 
-        <div class="header mt-3">
+        <div class="header">
           <img src="assets/icon/logo.gif" alt="XPRS">
         </div>
 
@@ -117,6 +114,7 @@
           <div class="btn-acc text-center mt-3">
             <button class="btn main-bg w-100 rounded-5 text-white" (click)="closeWelcome('register')">Create Account</button>
             <p class="my-2">Already have an account? <span class="main-color" (click)="closeWelcome('login')">Log in</span></p>
+            <!-- <p class="m-0">Continue as Guest <span class="main-color" (click)="closeWelcome('home')">Guest</span></p> -->
           </div>
         </div>
       </div>

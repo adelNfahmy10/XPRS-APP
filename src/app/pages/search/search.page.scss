@@ -40,7 +40,9 @@
 
 .out-of-stock span{
   background:white;
-  color:red;
+  color:red !important;
+  font-size: 10px;
+  font-weight: 600;
   padding:6px 14px;
   border-radius:20px;
 }

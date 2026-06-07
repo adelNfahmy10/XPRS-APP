@@ -12,7 +12,7 @@ import { RouterLink } from '@angular/router';
   templateUrl: './search.page.html',
   styleUrls: ['./search.page.scss'],
   standalone: true,
-  imports: [IonRefresherContent, IonRefresher, IonButton, IonSkeletonText, IonIcon, IonButtons, IonItem, IonList, IonLabel, IonSearchbar, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, RouterLink, IonMenuButton, IonThumbnail ]
+  imports: [IonRefresherContent, IonRefresher, IonButton, IonSkeletonText, IonButtons, IonItem, IonList, IonLabel, IonSearchbar, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, RouterLink, IonMenuButton, IonThumbnail ]
 })
 export class SearchPage implements OnInit{
   private readonly _CategorieService = inject(CategorieService);
