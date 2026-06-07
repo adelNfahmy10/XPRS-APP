@@ -33,6 +33,9 @@ export class AppComponent {
   favCount = this._FavoriteService.favoriteItemCount;
   cartProducts:any[] = []
 
+  isClosing = signal(false);
+  showWelcome = false;
+
   public appPages = [
     { title: 'Home', url: '/home', icon: 'mail' },
     { title: 'Shop', url: '/categories'},
@@ -47,13 +50,27 @@ export class AppComponent {
 
   constructor() {
     addIcons({ mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, heartOutline, heartSharp, archiveOutline, archiveSharp, trashOutline, trashSharp, warningOutline, warningSharp, bookmarkOutline, bookmarkSharp });
+
+    this.checkFirstVisit();
+  }
+
+  checkFirstVisit() {
+    const isFirstVisit = localStorage.getItem('isFirstVisit');
+
+    if (!isFirstVisit) {
+      this.showWelcome = true;
+    }
+  }
+
+  closeWelcome(type: 'login' | 'register' | 'home') {
+    localStorage.setItem('isFirstVisit', 'false');
+    this.showWelcome = false;
+
+    this._Router.navigate([`/${type}`])
   }
 
 
-  showWelcome:any = signal(false);
-  isClosing = signal(false);
-
-  async ngOnInit() {
+  ngOnInit() {
     if (Capacitor.isNativePlatform()) {
       this.initPush();
     }
@@ -66,34 +83,8 @@ export class AppComponent {
       this.getCart();
     }
 
-    const result = await Preferences.get({
-      key: 'welcome_seen'
-    });
-
-    this.showWelcome.set(result.value);
   }
 
-  async closeWelcome(path: string) {
-
-    // 1. احفظ إنه اتشاف
-    await Preferences.set({
-      key: 'welcome_seen',
-      value: 'true'
-    });
-
-    // 2. روح للصفحة الأول
-    this._Router.navigate(['/' + path]);
-
-    // 1. شغل animation الأول
-    this.isClosing.set(true);
-
-    // 3. بعد لحظة صغيرة اقفل الـ layout
-    setTimeout(() => {
-      this.showWelcome.set(false);
-      this.isClosing.set(false);
-    }, 500);
-
-  }
 
   // Add Cart When Open App
   addCart():void{
@@ -152,7 +143,6 @@ export class AppComponent {
     // 3. Get token
     PushNotifications.addListener('registration', (token) => {
       console.log('FCM Token:', token.value);
-      // ابعته للـ backend
     });
 
     // 4. Success handler

@@ -1,5 +1,7 @@
 <ion-app>
   <ion-split-pane contentId="main-content">
+
+    <!-- Menu List -->
     <ion-menu contentId="main-content" type="overlay">
       <ion-content class="position-relative">
         <ion-list id="inbox-list">
@@ -67,15 +69,16 @@
         </ion-list> -->
       </ion-content>
     </ion-menu>
-    <ion-router-outlet id="main-content"></ion-router-outlet>
-    <ngx-spinner bdColor = "rgba(0, 0, 0, .9)" size = "large" color = "#000" [fullScreen] = "true">
-      <div class="text-center logo-spinner-container">
-        <img src="assets/icon/xprs_spinner.gif" class="w-100" alt="XPRS">
-      </div>
-    </ngx-spinner>
 
 
-    @if(showWelcome()){
+    @if(!showWelcome){
+      <!-- Pages Routers -->
+      <ion-router-outlet id="main-content"></ion-router-outlet>
+    }
+
+
+    <!-- Welcome Section-->
+    @if(showWelcome){
       <div class="layout" [class.hide]="isClosing()">
         <div class="skip position-absolute top-0 end-0 m-3" (click)="closeWelcome('home')">
           <span class="main-color close">
@@ -119,8 +122,12 @@
       </div>
     }
 
+    <!-- Loading Screen -->
+    <ngx-spinner bdColor = "rgba(0, 0, 0, .9)" size = "large" color = "#000" [fullScreen] = "true">
+      <div class="text-center logo-spinner-container">
+        <img src="assets/icon/xprs_spinner.gif" class="w-100" alt="XPRS">
+      </div>
+    </ngx-spinner>
+
   </ion-split-pane>
-
-
-
 </ion-app>
