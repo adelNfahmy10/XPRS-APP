@@ -179,3 +179,27 @@ $main-color: #81FB37;
   }
 
 }
+
+
+.empty-state {
+  padding: 60px 20px;
+  text-align: center;
+
+  ion-icon {
+    font-size: 70px;
+    color: $main-color;
+    margin-bottom: 16px;
+  }
+
+  h2 {
+    margin: 0 0 10px;
+    font-size: 22px;
+    font-weight: 700;
+  }
+
+  p {
+    margin: 0;
+    color: var(--ion-color-medium);
+    line-height: 1.6;
+  }
+}
