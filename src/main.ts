@@ -15,6 +15,7 @@ import { headerInterceptor } from './core/interceptors/header/header-interceptor
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { importProvidersFrom } from '@angular/core';
 import { loadingInterceptor } from './core/interceptors/loading/loading-interceptor';
+import { authInterceptor } from './core/interceptors/auth/auth-interceptor';
 // register Swiper custom elements
 register();
 
@@ -23,7 +24,7 @@ bootstrapApplication(AppComponent, {
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
     provideRouter(routes, withPreloading(PreloadAllModules)),
-    provideHttpClient(withFetch(), withInterceptors([headerInterceptor,loadingInterceptor])),
+    provideHttpClient(withFetch(), withInterceptors([headerInterceptor,loadingInterceptor, authInterceptor])),
     provideAnimations(),
     provideToastr(),
     importProvidersFrom(NgxSpinnerModule),

@@ -114,7 +114,7 @@ export class CartPage implements OnInit {
       )
     ).subscribe({
       next: (res) => {
-        console.log(res);
+        // console.log(res);
       },
       error: (err) => {
         this._ToastrService.warning(

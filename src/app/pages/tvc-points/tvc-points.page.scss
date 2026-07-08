@@ -1,0 +1,181 @@
+$main-color: #81FB37;
+.image-auth{
+  img{
+    width: 120px;
+  }
+}
+
+.points-container {
+  padding: 16px;
+}
+
+.points-card {
+  padding: 22px;
+  border-radius: 24px;
+  border: 1px solid rgba(129, 251, 55, .18);
+
+  box-shadow:
+    0 0 0 1px rgba(129, 251, 55, .05),
+    0 12px 30px rgba(204, 204, 204, .25);
+
+  transition: .25s ease;
+
+  &:active {
+    transform: scale(.99);
+  }
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.avatar {
+  width: 54px;
+  height: 54px;
+
+  border-radius: 50%;
+  border: 1px solid rgba(129, 251, 55, .25);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  ion-icon {
+    color: $main-color;
+    font-size: 26px;
+  }
+}
+
+.star {
+  color: $main-color;
+  font-size: 24px;
+}
+
+.card-header {
+
+  h2 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+  }
+
+  p {
+    margin-top: 5px;
+    font-size: 14px;
+    color: var(--ion-color-medium);
+  }
+
+}
+
+.total-points {
+
+  margin-top: 34px;
+  text-align: center;
+
+  small {
+    display: block;
+    color: var(--ion-color-medium);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 13px;
+  }
+
+  h1 {
+    margin: 12px 0;
+    font-size: 44px;
+    color: $main-color;
+    font-weight: 800;
+    letter-spacing: -2px;
+  }
+
+  span {
+    font-size: 16px;
+    color: var(--ion-color-medium);
+  }
+
+}
+
+.stats-grid {
+
+  margin-top: 22px;
+
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 14px;
+
+}
+
+.stat-card {
+
+  border-radius: 20px;
+
+  padding: 18px;
+
+  border: 1px solid rgba(129, 251, 55, .18);
+
+  box-shadow:
+    0 0 0 1px rgba(129, 251, 55, .04),
+    0 5px 10px rgba(204, 204, 204, .2);
+
+  transition: .25s;
+
+  &:active {
+    transform: scale(.97);
+  }
+
+  ion-icon {
+
+    width: 46px;
+    height: 46px;
+
+    border-radius: 50%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: $main-color;
+
+    border: 1px solid rgba(129, 251, 55, .25);
+
+    padding: 10px;
+
+    margin-bottom: 18px;
+  }
+
+  h4 {
+
+    margin: 0;
+
+    font-size: 14px;
+
+    color: var(--ion-color-medium);
+
+    font-weight: 500;
+
+  }
+
+  span {
+
+    display: block;
+
+    margin-top: 10px;
+
+    color: $main-color;
+
+    font-size: 22px;
+
+    font-weight: 700;
+
+  }
+
+}

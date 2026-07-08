@@ -52,8 +52,6 @@ export class RegisterPage {
         this._Router.navigate(['/home']);
       },
       error: (err) => {
-        console.log(err);
-
         this._ToastrService.error(err.error.details);
       }
     });

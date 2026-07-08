@@ -83,5 +83,9 @@ export const routes: Routes = [
     path: 'orders',
     loadComponent: () => import('./pages/orders/orders.page').then( m => m.OrdersPage)
   },
+  {
+    path: 'tvc-points',
+    loadComponent: () => import('./pages/tvc-points/tvc-points.page').then( m => m.TvcPointsPage)
+  },
 
 ];

@@ -14,6 +14,7 @@ import { PushNotifications } from '@capacitor/push-notifications';
 import { ThemeService } from 'src/core/services/theme/theme-service';
 import { Capacitor } from '@capacitor/core';
 import { filter } from 'rxjs';
+import * as icons from 'ionicons/icons';
 
 @Component({
   selector: 'app-root',
@@ -50,7 +51,7 @@ export class AppComponent {
 
   constructor() {
     addIcons({ mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, heartOutline, heartSharp, archiveOutline, archiveSharp, trashOutline, trashSharp, warningOutline, warningSharp, bookmarkOutline, bookmarkSharp });
-
+    addIcons(icons);
     this.checkFirstVisit();
   }
 

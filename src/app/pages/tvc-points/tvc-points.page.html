@@ -1,0 +1,101 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>
+      <div class="image-auth py-3 text-center me-5">
+        <img
+          loading="lazy"
+          [src]="_ThemeService.isDark() ? 'assets/icon/TVC-logo-dark.png' : 'assets/icon/TVC-logo-light.png'"
+          alt="TVC"
+          class="auth-logo-img"
+        >
+      </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  @if(data && points){
+    <div class="points-container">
+
+      <!-- Header Card -->
+      <div class="points-card">
+
+        <div class="card-header">
+
+          <div class="user-info">
+            <div class="avatar">
+              <ion-icon name="person-outline"></ion-icon>
+            </div>
+
+            <div>
+              <h2>{{ data?.firstname }} {{ data?.lastname }}</h2>
+              <p>Loyalty Member</p>
+            </div>
+          </div>
+
+          <ion-icon class="star" name="star"></ion-icon>
+
+        </div>
+
+        <div class="total-points">
+
+          <small>Total Points</small>
+
+          <h1>{{ points?.TotalPoints | number }}</h1>
+
+          <span>
+            ≈ {{ (points?.TotalPoints / 100) | number:'1.0-2' }} EGP
+          </span>
+
+        </div>
+
+      </div>
+
+      <!-- Stats -->
+
+      <div class="stats-grid">
+
+        <div class="stat-card">
+          <ion-icon name="wallet-outline"></ion-icon>
+
+          <h4>Current Balance</h4>
+
+          <span>{{ points?.CurrentBalance | number }} Pts</span>
+        </div>
+
+        <div class="stat-card">
+          <ion-icon name="cash-outline"></ion-icon>
+
+          <h4>Redeemed</h4>
+
+          <span>{{ points?.RedeemedPoints | number }} Pts</span>
+        </div>
+
+        <div class="stat-card">
+          <ion-icon name="shield-checkmark-outline"></ion-icon>
+
+          <h4>Valid Balance</h4>
+
+          <span>{{ points?.CurrentValidBalance | number }} Pts</span>
+        </div>
+
+        <div class="stat-card">
+          <ion-icon name="hourglass-outline"></ion-icon>
+
+          <h4>Pending</h4>
+
+          <span>{{ points?.CurrentPendingBalance | number }} Pts</span>
+        </div>
+
+      </div>
+
+    </div>
+  }
+
+
+</ion-content>
