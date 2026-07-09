@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonIcon, IonButtons, IonBackButton } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonIcon, IonButtons, IonBackButton, IonRefresher, IonRefresherContent } from '@ionic/angular/standalone';
 import { TvsPointsService } from 'src/core/services/tvs-points/tvs-points-service';
 import { ThemeService } from 'src/core/services/theme/theme-service';
 
@@ -10,7 +10,7 @@ import { ThemeService } from 'src/core/services/theme/theme-service';
   templateUrl: './tvc-points.page.html',
   styleUrls: ['./tvc-points.page.scss'],
   standalone: true,
-  imports: [IonBackButton, IonButtons, IonIcon, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [IonRefresherContent, IonRefresher, IonBackButton, IonButtons, IonIcon, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
 })
 export class TvcPointsPage implements OnInit {
   private readonly _TvsPointsService = inject(TvsPointsService);
@@ -24,12 +24,25 @@ export class TvcPointsPage implements OnInit {
     this.getInfo();
   }
 
-  getInfo(): void {
+  handleRefresh(event: any) {
     this._TvsPointsService.getInfo().subscribe({
       next: (res) => {
         this.data = res;
         console.log(this.data);
 
+        this.getPointsToken();
+        event.target.complete();
+      },
+      error: (err) =>{
+        event.target.complete();
+      }
+    });
+  }
+
+  getInfo(): void {
+    this._TvsPointsService.getInfo().subscribe({
+      next: (res) => {
+        this.data = res;
         this.getPointsToken();
       },
       error: (err) => console.error(err)
@@ -51,7 +64,6 @@ export class TvcPointsPage implements OnInit {
     this._TvsPointsService.getPoints(this.data?.phone).subscribe({
       next: (res) => {
         this.points = typeof res === 'string' ? JSON.parse(res) : res;
-        console.log('points:', JSON.parse(res));
         this.getPointsHistory();
       },
       error: (err) => console.error(err)
@@ -62,7 +74,6 @@ export class TvcPointsPage implements OnInit {
     this._TvsPointsService.getPointsHistory(this.data?.phone).subscribe({
       next: (res) => {
         this.history = res;
-        console.log('History:', res);
       },
       error: (err) => console.error(err)
     });
