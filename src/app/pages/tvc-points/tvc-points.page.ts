@@ -4,13 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonIcon, IonButtons, IonBackButton, IonRefresher, IonRefresherContent } from '@ionic/angular/standalone';
 import { TvsPointsService } from 'src/core/services/tvs-points/tvs-points-service';
 import { ThemeService } from 'src/core/services/theme/theme-service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-tvc-points',
   templateUrl: './tvc-points.page.html',
   styleUrls: ['./tvc-points.page.scss'],
   standalone: true,
-  imports: [IonRefresherContent, IonRefresher, IonBackButton, IonButtons, IonIcon, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [IonRefresherContent, IonRefresher, IonBackButton, IonButtons, IonIcon, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, RouterLink]
 })
 export class TvcPointsPage implements OnInit {
   private readonly _TvsPointsService = inject(TvsPointsService);

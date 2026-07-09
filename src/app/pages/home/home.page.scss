@@ -6,7 +6,7 @@ ion-title{
 }
 
 .auth-section{
-  box-shadow: 0 0 10px #ccc;
+  box-shadow: 0 0 10px #cccccc92;
   & > span{
     font-size: 14px;
   }
@@ -15,4 +15,8 @@ ion-title{
       width: 70px;
     }
   }
+}
+
+.tvc-details{
+  font-style: italic;
 }

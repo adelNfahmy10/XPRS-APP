@@ -36,7 +36,8 @@ export class ProfilePage {
     localStorage.removeItem('fullName')
     localStorage.removeItem('userEmail')
     localStorage.removeItem('userPhone')
-    localStorage.removeItem('userPhone')
+    localStorage.removeItem('XPRSAppToken')
+    localStorage.removeItem('xprsPointsToken')
     this._Router.navigateByUrl('/home').then(() => {
       window.location.reload();
     });

@@ -43,14 +43,31 @@
       <!-- Categories Slider -->
       <app-categories-slider></app-categories-slider>
 
-      <!-- Auth -->
+
+
+      <!-- Auth && TVC Points -->
       <div
         class="auth-section rounded-4 d-flex align-items-center justify-content-evenly text-center px-4 py-2"
         [ngStyle]="{
           'backgrond' : _ThemeService.isDark() ? '#000' : '#fff'
         }"
       >
-        <span class="main-color" routerLink="/register">Sign Up</span>
+        @if(data?.phone){
+          <div class="position-relative w-100 py-1" routerLink="/tvc-points">
+            <div class="image-auth">
+              <img
+                loading="lazy"
+                [src]="_ThemeService.isDark() ? 'assets/icon/TVC-logo-dark.png' : 'assets/icon/TVC-logo-light.png'"
+                alt="TVC"
+                class="auth-logo-img"
+              >
+            </div>
+            <div class="tvc-details mt-2">
+              <h5 class="m-0 p-0">Valid Points: <span class="main-color fw-bold">{{ points?.CurrentBalance || 0 | number}} Pts</span> </h5>
+            </div>
+          </div>
+        } @else {
+          <span class="main-color" routerLink="/register">Sign Up</span>
           <div class="position-relative">
             <div class="image-auth" routerLink="/tvc-points">
               <img
@@ -62,7 +79,9 @@
             </div>
             <span>|</span>
           </div>
-        <span class="main-color" routerLink="/login">Login</span>
+          <span class="main-color" routerLink="/login">Login</span>
+        }
+
       </div>
 
       <!-- Brand Slider -->

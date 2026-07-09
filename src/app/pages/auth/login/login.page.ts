@@ -8,6 +8,7 @@ import { CheckoutService } from 'src/core/services/checkout/checkout-service';
 import { ToastrService } from 'ngx-toastr';
 import { Router, RouterLink } from '@angular/router';
 import { ThemeService } from 'src/core/services/theme/theme-service';
+import { TvsPointsService } from 'src/core/services/tvs-points/tvs-points-service';
 
 @Component({
   selector: 'app-login',
@@ -22,11 +23,16 @@ export class LoginPage {
   private readonly _CartService = inject(CartService)
   private readonly _CheckoutService = inject(CheckoutService)
   private readonly _ToastrService = inject(ToastrService)
+  private readonly _TvsPointsService = inject(TvsPointsService);
+
   readonly _ThemeService = inject(ThemeService)
   private readonly _Router = inject(Router)
 
   token = this._CartService.token
   cartId = this._CartService.cartId
+
+  data: any = {};
+  points: any;
 
   handleRefresh(event: any) {
 
@@ -54,7 +60,9 @@ export class LoginPage {
         this.getUserInfo()
 
         this._ToastrService.success('Login Successfully!')
-        this._Router.navigate(['/home'])
+        this._Router.navigateByUrl('/home').then(() => {
+          window.location.reload();
+        });
       },
       error:(err)=>{
         this._ToastrService.error(err?.error?.non_field_errors?.[0])
@@ -76,13 +84,36 @@ export class LoginPage {
     if(this.token()){
       this._CheckoutService.getInfo().subscribe({
         next:(res)=>{
+          this.data = res;
           localStorage.setItem('userId', res.id )
           localStorage.setItem('fullName', res.firstname + ' ' +res.lastname )
           localStorage.setItem('userEmail', res.email )
           localStorage.setItem('userPhone', res.phone )
+          this.getPointsToken();
         }
       })
     }
+  }
+
+  getPointsToken(): void {
+    this._TvsPointsService.getPointsToken().subscribe({
+      next: (res) => {
+        // الـ Interceptor هيحفظ الـ access_token في LocalStorage
+        this.getPoints()
+      },
+      error: (err) => console.error(err)
+    });
+  }
+
+  getPoints(): void {
+    this._TvsPointsService.getPoints(this.data?.phone).subscribe({
+      next: (res) => {
+        this.points = typeof res === 'string' ? JSON.parse(res) : res;
+        console.log(JSON.parse(res));
+
+      },
+      error: (err) => console.error(err)
+    });
   }
 
   // Change Themes (Dark | Light) Mode
