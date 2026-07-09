@@ -18,19 +18,19 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-    <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
     <ion-refresher-content
       pullingIcon="arrow-down"
       refreshingSpinner="circles">
     </ion-refresher-content>
   </ion-refresher>
 
-  <div class="notifications">
+  <div class="notifications mb-4 pb-5">
     <ion-list>
       @for (notification of allNotifications; track $index) {
         <ion-item>
           <div class="notification-image">
-            <img src="assets/icon/notification_active.svg" alt="">
+            <img src="assets/icon/notification_active.svg" alt="xprs notification">
           </div>
           <ion-label class="notification-content">
             <h3 class="mb-2">{{ notification.title }}</h3>

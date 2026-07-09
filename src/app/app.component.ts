@@ -45,7 +45,7 @@ export class AppComponent {
     { title: `My Favorites`, url: '/favorites'},
     { title: 'About', url: '/about'},
     { title: 'Contact Us', url: '/contact-us'},
-    { title: 'Privecy', url: '/privacy'},
+    { title: 'Privacy', url: '/privacy'},
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
 
