@@ -24,18 +24,15 @@ export class CategoriesPage implements OnInit {
   }
 
   handleRefresh(event: any) {
-
     this._HomeService.getCategories().subscribe({
       next:(res)=>{
         this.categories = res;
-
         event.target.complete();
       },
       error: () => {
         event.target.complete();
       }
     })
-
   }
 
   getAllCategories():void{

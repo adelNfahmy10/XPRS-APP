@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonItem, IonLabel, IonButtons, IonBackButton, IonRefresher, IonRefresherContent, IonSearchbar, IonRange } from '@ionic/angular/standalone';
 import { CategorieService } from 'src/core/services/categories/categorie-service';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { BrandService } from 'src/core/services/brands/brand-service';
 
 export interface ProductFilters {
@@ -35,6 +35,7 @@ export interface ProductFilters {
 export class ProductsPage implements OnInit {
   private readonly _CategorieService = inject(CategorieService)
   private readonly _ActivatedRoute = inject(ActivatedRoute)
+  private readonly _Router = inject(Router)
 
   catId:any
   slug:any
@@ -62,6 +63,14 @@ export class ProductsPage implements OnInit {
   }
 
   handleRefresh(event: any) {
+    // const url = this._Router.url;
+
+    // console.log('Current URL:', url);
+
+    // this._Router.navigateByUrl(url).then(() => {
+    //   console.log('Navigation finished');
+    //   event.target.complete();
+    // });
     this._ActivatedRoute.paramMap.subscribe({
       next: (param) => {
         const type = param.get('type');
@@ -121,6 +130,7 @@ export class ProductsPage implements OnInit {
         event.target.complete();
       }
     });
+
   }
 
   // get related products

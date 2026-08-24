@@ -5,6 +5,7 @@ import { IonContent, IonHeader, IonTitle, IonToolbar, IonIcon, IonButtons, IonBa
 import { TvsPointsService } from 'src/core/services/tvs-points/tvs-points-service';
 import { ThemeService } from 'src/core/services/theme/theme-service';
 import { RouterLink } from '@angular/router';
+import { CartService } from 'src/core/services/cart/cart-service';
 
 @Component({
   selector: 'app-tvc-points',
@@ -15,11 +16,13 @@ import { RouterLink } from '@angular/router';
 })
 export class TvcPointsPage implements OnInit {
   private readonly _TvsPointsService = inject(TvsPointsService);
+  private readonly _CartService = inject(CartService);
   readonly _ThemeService = inject(ThemeService);
 
   data: any = {};
   points: any;
   history: any[] = [];
+  token = this._CartService.token
 
   ngOnInit(): void {
     this.getInfo();
@@ -29,8 +32,6 @@ export class TvcPointsPage implements OnInit {
     this._TvsPointsService.getInfo().subscribe({
       next: (res) => {
         this.data = res;
-        console.log(this.data);
-
         this.getPointsToken();
         event.target.complete();
       },
@@ -41,13 +42,16 @@ export class TvcPointsPage implements OnInit {
   }
 
   getInfo(): void {
-    this._TvsPointsService.getInfo().subscribe({
-      next: (res) => {
-        this.data = res;
-        this.getPointsToken();
-      },
-      error: (err) => console.error(err)
-    });
+    if (this.token()) {
+      this._TvsPointsService.getInfo().subscribe({
+        next: (res) => {
+          this.data = res;
+          this.getPointsToken();
+        },
+        error: (err) => console.error(err)
+      });
+    }
+
   }
 
   getPointsToken(): void {

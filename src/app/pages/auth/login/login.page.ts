@@ -109,8 +109,6 @@ export class LoginPage {
     this._TvsPointsService.getPoints(this.data?.phone).subscribe({
       next: (res) => {
         this.points = typeof res === 'string' ? JSON.parse(res) : res;
-        console.log(JSON.parse(res));
-
       },
       error: (err) => console.error(err)
     });

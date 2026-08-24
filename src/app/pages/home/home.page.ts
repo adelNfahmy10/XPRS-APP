@@ -14,6 +14,7 @@ import { CartBarComponent } from "src/app/components/cart-bar/cart-bar.component
 import { ThemeService } from 'src/core/services/theme/theme-service';
 import { HomeService } from 'src/core/services/home/home-service';
 import { TvsPointsService } from 'src/core/services/tvs-points/tvs-points-service';
+import { CartService } from 'src/core/services/cart/cart-service';
 
 @Component({
   selector: 'app-home',
@@ -25,10 +26,12 @@ import { TvsPointsService } from 'src/core/services/tvs-points/tvs-points-servic
 export class HomePage implements OnInit {
   readonly _ThemeService = inject(ThemeService);
   private readonly _TvsPointsService = inject(TvsPointsService);
+  private readonly _CartService = inject(CartService);
   private readonly _HomeService = inject(HomeService);
 
   data: any = {};
   points: any;
+  token = this._CartService.token
 
   ngOnInit(): void {
     this.getInfo()
@@ -37,24 +40,27 @@ export class HomePage implements OnInit {
   handleRefresh(event: any) {
     this._HomeService.getHomeData().subscribe({
       next: (res) => {
-        this.getInfo()
         event.target.complete();
+        window.location.reload();
       },
       error: () => {
         event.target.complete();
+        window.location.reload();
       }
     });
 
   }
 
   getInfo(): void {
-    this._TvsPointsService.getInfo().subscribe({
-      next: (res) => {
-        this.data = res;
-        this.getPointsToken();
-      },
-      error: (err) => console.error(err)
-    });
+    if (this.token()) {
+      this._TvsPointsService.getInfo().subscribe({
+        next: (res) => {
+          this.data = res;
+          this.getPointsToken();
+        },
+        error: (err) => console.error(err)
+      });
+    }
   }
 
   getPointsToken(): void {
@@ -71,8 +77,6 @@ export class HomePage implements OnInit {
     this._TvsPointsService.getPoints(this.data?.phone).subscribe({
       next: (res) => {
         this.points = typeof res === 'string' ? JSON.parse(res) : res;
-        console.log(JSON.parse(res));
-
       },
       error: (err) => console.error(err)
     });

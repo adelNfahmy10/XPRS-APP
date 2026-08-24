@@ -6,6 +6,7 @@ import { CartService } from 'src/core/services/cart/cart-service';
 import { CheckoutService } from 'src/core/services/checkout/checkout-service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-checkout',
@@ -273,31 +274,90 @@ private readonly _CartService = inject(CartService)
     orange_account_number: ['']
   })
 
-  submitCheckout():void{
-    let data = this.checkoutForm.value
-    data.cart = this.cartId() == '0' ? +this.cartId()! : this.cartId(),
-    data.code = this.promoCode
-    this.paymentMethod = data.payment_method
+  submitCheckout(): void {
+    const formData = this.checkoutForm.value;
 
-    this._CheckoutService.addOrder(data).subscribe({
-      next:(res)=>{
-        localStorage.setItem('order_id', res.order.id);
-        if (this.paymentMethod == 0 || this.paymentMethod == 1 || this.paymentMethod == 206) {
-          if (this.paymentMethod == 206) {
-            this._ToastrService.success('One of our team will contact you shortly')
-          } else {
-            this._ToastrService.success('Order placed successfully!')
-          }
+    const data = {
+      ...formData,
+      cart: this.cartId() === '0'
+        ? +this.cartId()!
+        : this.cartId(),
+      code: this.promoCode
+    };
 
-          const token = localStorage.getItem('xprsToken');
-          if (token) {
-            this._Router.navigate(['/myorder']);
-          } else {
-            this._Router.navigate(['/home']);
+    this.paymentMethod = data.payment_method;
+
+    this._CartService.getCart(this.cartId()).subscribe({
+      next: (res) => {
+        const cartProducts = res.cartproduct;
+
+        // ==========================================
+        // 1. Update all cart products quantity = 1
+        // ==========================================
+
+        const updateRequests = cartProducts.map((item: any) => {
+
+          const body = {
+            cart: res.id,
+            product: item.product.id,
+            product_property: item.product_property,
+            quantity: 1
+          };
+
+          return this._CartService.updateCartProduct(body);
+        });
+
+        forkJoin(updateRequests).subscribe({
+          next: (updateResponses) => {
+            // ==========================================
+            // 2. Create Order
+            // ==========================================
+
+            this._CheckoutService.addOrder(data).subscribe({
+              next: (orderResponse) => {
+                localStorage.setItem(
+                  'order_id',
+                  orderResponse.order.id
+                );
+
+                // ==========================================
+                // 3. هنا بعد نجاح الـOrder
+                //    هننقص Product quantity - 1
+                // ==========================================
+
+                if (
+                  this.paymentMethod == 0 ||
+                  this.paymentMethod == 1 ||
+                  this.paymentMethod == 206
+                ) {
+
+                  if (this.paymentMethod == 206) {
+                    this._ToastrService.success(
+                      'One of our team will contact you shortly'
+                    );
+                  } else {
+                    this._ToastrService.success(
+                      'Order placed successfully!'
+                    );
+                  }
+
+                  const token = localStorage.getItem('xprsToken');
+
+                  if (token) {
+                    this._Router.navigate(['/myorder']);
+                  } else {
+                    this._Router.navigate(['/home']);
+                  }
+
+                  this.getAllCart();
+                }
+              }
+            });
+
           }
-          this.getAllCart()
-        }
+        });
+
       }
-    })
+    });
   }
 }

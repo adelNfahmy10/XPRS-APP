@@ -80,17 +80,17 @@
         <ul class="list-unstyled d-flex flex-column gap-2 mb-0">
           <li class="d-flex justify-content-between align-items-center">
             <h5 class="m-0">Quantity</h5>
-            <span class="main-color fw-bold fs-15">{{cartCount()}} Piece(s)</span>
+            <span class="main-color fw-bold fs-15">{{cartCount() | number}} Piece(s)</span>
           </li>
 
           <li class="d-flex justify-content-between align-items-center">
             <h5 class="m-0">Delivery</h5>
-            <span class="main-color fs-20">{{shippingValue()}} EGP</span>
+            <span class="main-color fs-20">{{shippingValue() | number}} EGP</span>
           </li>
 
           <li class="d-flex justify-content-between align-items-center">
             <h5 class="m-0">SubTotal</h5>
-            <span class="main-color fw-bold fs-20">{{subTotal()}} EGP</span>
+            <span class="main-color fw-bold fs-20">{{subTotal() | number}} EGP</span>
           </li>
 
           <li class="d-flex justify-content-between align-items-start border-top pt-2">
@@ -98,7 +98,7 @@
               <h5 class="m-0">Total</h5>
               <!-- <span class="text-danger fw-medium">including 14% Taxes</span> -->
             </div>
-            <span class="main-color fw-bold fs-20">{{subTotal() + shippingValue()}} EGP</span>
+            <span class="main-color fw-bold fs-20">{{subTotal() + shippingValue() | number}} EGP</span>
           </li>
         </ul>
         <div class="btn-checkout text-center mt-2">

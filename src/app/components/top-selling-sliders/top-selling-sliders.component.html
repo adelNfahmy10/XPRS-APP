@@ -9,7 +9,15 @@
           <div class="offer-silde rounded-4">
 
             <div class="card-image position-relative">
-              <img loading="lazy"[src]="`https://xprs.s3.amazonaws.com/${item?.picture1[1]}` || 'assets/icon/xprs_spinner.gif'" [alt]="item?.picture1_alt" class="offer-img rounded-0 cr" [routerLink]="'/product/' + item.id"/>
+             <img
+              loading="lazy"
+              [src]="item?.picture1?.[1]
+                ? 'https://xprs.s3.amazonaws.com/' + item.picture1[1]
+                : 'assets/icon/xprs_spinner.gif'"
+              [alt]="item?.picture1_alt"
+              class="offer-img rounded-0 cr"
+              [routerLink]="'/product/' + item.id"
+            />
 
               <span class="icon-option position-absolute d-flex flex-column gap-1 top-0 start-0 p-1">
                   <i

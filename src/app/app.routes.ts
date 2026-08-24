@@ -87,5 +87,8 @@ export const routes: Routes = [
     path: 'tvc-points',
     loadComponent: () => import('./pages/tvc-points/tvc-points.page').then( m => m.TvcPointsPage)
   },
-
+  {
+    path: 'change-password',
+    loadComponent: () => import('./pages/auth/change-password/change-password.page').then( m => m.ChangePasswordPage)
+  },
 ];

@@ -35,10 +35,14 @@ export class CartPage implements OnInit {
     if(this.cartId()){
       this._CartService.getCart(this.cartId()).subscribe({
         next:(res)=>{
-          this._CartService.cartCount.set(res.cartproduct.length);
-          this._CartService.cartProducts.set(res.cartproduct);
-          this._CartService.subTotal.set(res.total);
+          this._CartService.cartCount.set(res.cartproduct.length)
+          this._CartService.cartProducts.set(res.cartproduct)
+          const totalAmount = this._CartService.cartProducts().reduce(
+              (sum, acc) => sum + acc.product.price,
+              0
+            );
 
+          this._CartService.subTotal.set(totalAmount)
           event.target.complete();
         },
         error: () => {
@@ -55,7 +59,13 @@ export class CartPage implements OnInit {
         next:(res)=>{
           this._CartService.cartCount.set(res.cartproduct.length)
           this._CartService.cartProducts.set(res.cartproduct)
-          this._CartService.subTotal.set(res.total)
+          // this._CartService.subTotal.set(res.total)
+          const totalAmount = this._CartService.cartProducts().reduce(
+              (sum, acc) => sum + acc.product.price,
+              0
+            );
+
+          this._CartService.subTotal.set(totalAmount)
         }
       })
     }
